@@ -5,75 +5,101 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>WELL-LAB | サンプルスライド</title>
 <style>
-  * { margin:0; padding:0; box-sizing:border-box; }
-  html, body { height:100%; scroll-behavior:smooth; font-family:sans-serif; }
-  body { background:#000; color:#fff; overflow-x:hidden; scroll-snap-type:y mandatory; }
+  /* --- 全体共通 --- */
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { height:100%; scroll-behavior:smooth; font-family:sans-serif; }
+body { background:#000; color:#fff; overflow-x:hidden; scroll-snap-type:y mandatory; }
 
-  /* --- セクション共通 --- */
-  section {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    scroll-snap-align:start;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    text-align: center;
-    overflow: hidden;
-    color:#fff;
-  }
+/* --- セクション --- */
+section {
+  position:relative;
+  width:100%;
+  height:100vh;
+  scroll-snap-align:start;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  overflow:hidden;
+  color:#fff;
+}
 
-  /* --- 黒オーバーレイ --- */
-  section::after {
-    content:"";
-    position:absolute;
-    top:0; left:0;
-    width:100%; height:100%;
-    background: rgba(0,0,0,0.6);
-    z-index:0;
-  }
+section::before {
+  content:"";
+  position:absolute;
+  top:0; left:0; width:100%; height:100%;
+  background: rgba(0,0,0,0.6); /* 暗めのオーバーレイ */
+  z-index:0;
+}
 
-  /* --- 背景画像 --- */
-  .bg-slide {
-    position:absolute;
-    top:0; left:0;
-    width:100%; height:100%;
-    object-fit:cover;
-    z-index:-1; /* オーバーレイより下 */
-    opacity:0;
-    transition: opacity 1s ease;
-  }
-  .bg-slide.show { opacity:1; }
+section img.bg-slide {
+  position:absolute; top:0; left:0;
+  width:100%; height:100%;
+  object-fit:cover;
+  z-index:0;
+  opacity:0;
+  transition: opacity 1s ease;
+}
+section img.bg-slide.show { opacity:1; }
 
-  /* --- 文字・ボタン --- */
-  section h1, section h2, section p, section a {
-    position: relative;
-    z-index:1;
-  }
-  h1 { font-size:3rem; margin-bottom:1rem; }
-  h2 { font-size:2rem; margin-bottom:1rem; }
-  p { max-width:700px; margin:0 auto 2rem; line-height:1.6; }
-  a.btn {
-    display:inline-block;
-    padding:0.8rem 2rem;
-    border-radius:30px;
-    background: linear-gradient(90deg, #2364a5, #2c7dce, #5aa0f0);
-    color:#fff;
-    text-decoration:none;
-  }
+section h1, section h2, section p, section a { position:relative; z-index:1; }
 
-  /* --- ヘッダー --- */
-  .site-header {
-    position:fixed; top:0; left:0; width:100%;
-    background: rgba(0,0,0,0.7); backdrop-filter:blur(8px);
-    padding:1rem 2rem; display:flex; justify-content:space-between; align-items:center; z-index:1000;
-  }
-  .main-nav ul { display:flex; list-style:none; gap:2rem; }
-  .main-nav a { color:#fff; text-decoration:none; font-weight:bold; }
+h1 { font-size:3rem; margin-bottom:1rem; }
+h2 { font-size:2rem; margin-bottom:1rem; }
+p { max-width:700px; margin:0 auto 2rem; line-height:1.6; }
+a.btn {
+  display:inline-block;
+  padding:0.8rem 2rem;
+  border-radius:30px;
+  background: linear-gradient(90deg, #2364a5, #2c7dce, #5aa0f0);
+  color:#fff;
+  text-decoration:none;
+}
 
-  /* --- フッター --- */
-  .site-footer { text-align:center; padding:2rem; background:#000; border-top:1px solid #222; }
+/* --- ヘッダー --- */
+.site-header {
+  position:fixed; top:0; left:0; width:100%;
+  background: rgba(0,0,0,0.7); backdrop-filter:blur(8px);
+  padding:1rem 2rem;
+  display:flex; justify-content:space-between; align-items:center;
+  z-index:1000;
+  transition: background 0.3s ease;
+}
+.site-header .logo img { height:40px; }
+
+/* ナビ */
+.main-nav ul { display:flex; list-style:none; gap:2rem; }
+.main-nav a {
+  color:#fff; text-decoration:none; font-weight:bold; position:relative; padding-bottom:4px;
+}
+.main-nav a::after {
+  content:"";
+  position:absolute;
+  bottom:0; left:0; width:100%; height:2px;
+  background: linear-gradient(90deg, #2364a5, #2c7dce, #5aa0f0);
+  transform: scaleX(0); transform-origin:left; transition: transform 0.3s ease;
+}
+.main-nav a:hover::after { transform: scaleX(1); }
+
+/* ハンバーガー */
+.hamburger { display:none; flex-direction:column; justify-content:space-between; width:25px; height:20px; cursor:pointer; }
+.hamburger span { display:block; height:3px; width:100%; background:#fff; border-radius:2px; }
+
+/* --- フッター --- */
+.site-footer { text-align:center; padding:2rem; background:#000; border-top:1px solid #222; }
+
+/* --- スマホ対応 --- */
+@media(max-width:768px){
+  .main-nav { display:none; position:absolute; top:100%; left:0; width:100%; background: rgba(0,0,0,0.9); flex-direction:column; }
+  .main-nav ul { flex-direction:column; gap:0; }
+  .main-nav li { border-bottom:1px solid #222; }
+  .main-nav a { padding:1rem; display:block; }
+  .hamburger { display:flex; }
+}
+
+/* ナビ開閉用クラス */
+.main-nav.open { display:flex; }
 </style>
 </head>
 <body>
