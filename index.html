@@ -148,7 +148,7 @@
 </section>
 
 <!-- Products -->
-<section id="products" data-slides="images/prod1.jpg,images/prod2.png,images/prod3.jpg">
+<section id="products" data-slides="images/prod1.jpg,images/prod2.png,images/prod3.png">
   <h2>Products</h2>
   <p>メンバーが作成した個人個人に寄り添った様々なシステムや製品を紹介します。</p>
   <a href="products.html" class="btn">プロダクトを見る</a>
@@ -180,7 +180,9 @@
 
   // ヘッダー背景変化
   const header = document.querySelector('.site-header');
-  window.addEventListener('scroll',()=>{ header.style.background = (window.scrollY>50)?'rgba(0,0,0,0.95)':'rgba(0,0,0,0.7)'; });
+  window.addEventListener('scroll',()=>{ 
+    header.style.background = (window.scrollY>50)?'rgba(0,0,0,0.95)':'rgba(0,0,0,0.7)'; 
+  });
 
   // 背景スライドショー
   const sections = document.querySelectorAll('section[data-slides]');
@@ -211,6 +213,39 @@
 
     },5000);
   });
+
+  // --- Toller風浮遊スクロール ---
+  const allSections = document.querySelectorAll('section');
+
+  allSections.forEach((sec, i) => sec.dataset.index = i); // インデックス付与
+  let ticking = false;
+
+  function updateSections() {
+    allSections.forEach(sec => {
+      const rect = sec.getBoundingClientRect();
+      const centerOffset = rect.top + rect.height/2 - window.innerHeight/2;
+
+      // 中央付近でスクロール減速
+      const damp = Math.min(Math.abs(centerOffset)/200, 1);
+      const offsetY = -centerOffset * (1 - damp);
+
+      // 少し上下に揺れる
+      const sway = Math.sin(window.scrollY / 200 + parseInt(sec.dataset.index)*0.5) * 5;
+
+      sec.style.transform = `translateY(${offsetY + sway}px)`;
+    });
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', ()=>{
+    if (!ticking){
+      window.requestAnimationFrame(updateSections);
+      ticking = true;
+    }
+  });
+
+  // 初回呼び出しで補正
+  updateSections();
 </script>
 
 </body>
