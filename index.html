@@ -22,15 +22,14 @@
     overflow: hidden;
   }
 
-    section::before {
+  section::before {
     content:"";
     position:absolute;
     top:0; left:0;
     width:100%; height:100%;
-    background: rgba(0,0,0,0.6); /* 透明度0.6で少し暗めに */
+    background: rgba(0,0,0,0.6); /* 透明度0.6で暗め */
     z-index:0;
-    }
-
+  }
 
   section h1, section h2, section p, section a {
     position: relative;
@@ -63,7 +62,10 @@
   .site-footer { text-align:center; padding:2rem; background:#000; border-top:1px solid #222; }
 
   /* 背景スライドショー */
-  .bg-slide { position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:0; transition: opacity 1s ease; opacity:0; }
+  .bg-slide { 
+    position:absolute; top:0; left:0; width:100%; height:100%; 
+    object-fit:cover; z-index:0; transition: opacity 1s ease; opacity:0; 
+  }
   .bg-slide.show { opacity:1; }
 </style>
 </head>
@@ -128,14 +130,13 @@
     const slides = sec.dataset.slides.split(',');
     let index = 0;
 
-    // 最初の画像表示
+    // 最初の画像を表示
     const imgEl = document.createElement('img');
     imgEl.src = slides[index];
     imgEl.classList.add('bg-slide', 'show');
     sec.appendChild(imgEl);
 
     setInterval(() => {
-      const prev = imgEl;
       index = (index + 1) % slides.length;
 
       const newImg = document.createElement('img');
@@ -143,9 +144,14 @@
       newImg.classList.add('bg-slide');
       sec.appendChild(newImg);
 
-      setTimeout(()=>{ newImg.classList.add('show'); prev.classList.remove('show'); 
-        setTimeout(()=>prev.remove(),1000);
+      // フェードイン/アウト
+      setTimeout(()=>{ newImg.classList.add('show'); imgEl.classList.remove('show'); 
+        setTimeout(()=> imgEl.remove(), 1000);
       },50);
+
+      // 次回のためにimgElを更新
+      imgEl.src = newImg.src; 
+      imgEl.className = newImg.className;
 
     }, 5000); // 5秒ごとに切替
   });
