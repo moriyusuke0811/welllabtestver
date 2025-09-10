@@ -157,33 +157,38 @@ a.btn {
 </footer>
 
 <script>
-  const sections = document.querySelectorAll('section[data-slides]');
-  sections.forEach(sec => {
-    const slides = sec.dataset.slides.split(',');
-    let index = 0;
+// ハンバーガークリックでナビ開閉
+const hamburger = document.querySelector('.hamburger');
+const nav = document.querySelector('.main-nav');
+hamburger.addEventListener('click', () => nav.classList.toggle('open'));
 
-    const imgEl = document.createElement('img');
-    imgEl.src = slides[index];
-    imgEl.classList.add('bg-slide', 'show');
-    sec.appendChild(imgEl);
+// スクロールでヘッダー背景変化
+const header = document.querySelector('.site-header');
+window.addEventListener('scroll', () => {
+  header.style.background = (window.scrollY > 50) ? 'rgba(0,0,0,0.95)' : 'rgba(0,0,0,0.7)';
+});
 
-    setInterval(() => {
-      const prev = imgEl;
-      index = (index + 1) % slides.length;
+// セクション背景スライドショー
+const sections = document.querySelectorAll('section[data-slides]');
+sections.forEach(sec => {
+  const slides = sec.dataset.slides.split(',');
+  let index = 0;
 
-      const newImg = document.createElement('img');
-      newImg.src = slides[index];
-      newImg.classList.add('bg-slide');
-      sec.appendChild(newImg);
+  const imgEl = document.createElement('img');
+  imgEl.src = slides[index];
+  imgEl.classList.add('bg-slide','show');
+  sec.appendChild(imgEl);
 
-      setTimeout(()=>{ 
-        newImg.classList.add('show'); 
-        prev.classList.remove('show'); 
-        setTimeout(()=>prev.remove(),1000);
-      },50);
-
-    }, 5000); // 5秒ごとに切替
-  });
+  setInterval(() => {
+    const prev = imgEl;
+    index = (index+1)%slides.length;
+    const newImg = document.createElement('img');
+    newImg.src = slides[index];
+    newImg.classList.add('bg-slide');
+    sec.appendChild(newImg);
+    setTimeout(()=>{ newImg.classList.add('show'); prev.classList.remove('show'); setTimeout(()=>prev.remove(),1000); },50);
+  },5000);
+});
 </script>
 
 </body>
