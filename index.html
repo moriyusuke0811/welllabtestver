@@ -6,106 +6,114 @@
 <title>WELL-LAB | サンプルスライド</title>
 <style>
   /* --- 全体共通 --- */
-* { margin:0; padding:0; box-sizing:border-box; }
-html, body { height:100%; scroll-behavior:smooth; font-family:sans-serif; }
-body { background:#000; color:#fff; overflow-x:hidden; scroll-snap-type:y mandatory; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body { height:100%; scroll-behavior:smooth; font-family:sans-serif; }
+  body { background:#000; color:#fff; overflow-x:hidden; scroll-snap-type:y mandatory; }
 
-/* --- セクション --- */
-section {
-  position:relative;
-  width:100%;
-  height:100vh;
-  scroll-snap-align:start;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
-  overflow:hidden;
-  color:#fff;
-}
+  /* --- セクション --- */
+  section {
+    position:relative;
+    width:100%;
+    height:100vh;
+    scroll-snap-align:start;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    overflow:hidden;
+    color:#fff;
+  }
 
-section::before {
-  content:"";
-  position:absolute;
-  top:0; left:0; width:100%; height:100%;
-  background: rgba(0,0,0,0.6); /* 暗めのオーバーレイ */
-  z-index:0;
-}
+  /* 暗めオーバーレイ */
+  section::before {
+    content:"";
+    position:absolute;
+    top:0; left:0; width:100%; height:100%;
+    background: rgba(0,0,0,0.6);
+    z-index:0;
+  }
 
-section img.bg-slide {
-  position:absolute; top:0; left:0;
-  width:100%; height:100%;
-  object-fit:cover;
-  z-index:0;
-  opacity:0;
-  transition: opacity 1s ease;
-}
-section img.bg-slide.show { opacity:1; }
+  /* 背景画像 */
+  section img.bg-slide {
+    position:absolute;
+    top:0; left:0;
+    width:100%; height:100%;
+    object-fit:cover;
+    z-index:0;
+    opacity:0;
+    transition: opacity 1s ease;
+  }
+  section img.bg-slide.show { opacity:1; }
 
-section h1, section h2, section p, section a { position:relative; z-index:1; }
+  /* セクション内テキスト */
+  section h1, section h2, section p, section a { position:relative; z-index:1; }
 
-h1 { font-size:3rem; margin-bottom:1rem; }
-h2 { font-size:2rem; margin-bottom:1rem; }
-p { max-width:700px; margin:0 auto 2rem; line-height:1.6; }
-a.btn {
-  display:inline-block;
-  padding:0.8rem 2rem;
-  border-radius:30px;
-  background: linear-gradient(90deg, #2364a5, #2c7dce, #5aa0f0);
-  color:#fff;
-  text-decoration:none;
-}
+  h1 { font-size:3rem; margin-bottom:1rem; }
+  h2 { font-size:2rem; margin-bottom:1rem; }
+  p { max-width:700px; margin:0 auto 2rem; line-height:1.6; }
+  a.btn {
+    display:inline-block;
+    padding:0.8rem 2rem;
+    border-radius:30px;
+    background: linear-gradient(90deg, #2364a5, #2c7dce, #5aa0f0);
+    color:#fff;
+    text-decoration:none;
+  }
 
-/* --- ヘッダー --- */
-.site-header {
-  position:fixed; top:0; left:0; width:100%;
-  background: rgba(0,0,0,0.7); backdrop-filter:blur(8px);
-  padding:1rem 2rem;
-  display:flex; justify-content:space-between; align-items:center;
-  z-index:1000;
-  transition: background 0.3s ease;
-}
-.site-header .logo img { height:40px; }
+  /* --- ヘッダー --- */
+  .site-header {
+    position:fixed; top:0; left:0; width:100%;
+    background: rgba(0,0,0,0.7); backdrop-filter:blur(8px);
+    padding:1rem 2rem;
+    display:flex; justify-content:space-between; align-items:center;
+    z-index:1000;
+    transition: background 0.3s ease;
+  }
+  .site-header .logo img { height:40px; }
 
-/* ナビ */
-.main-nav ul { display:flex; list-style:none; gap:2rem; }
-.main-nav a {
-  color:#fff; text-decoration:none; font-weight:bold; position:relative; padding-bottom:4px;
-}
-.main-nav a::after {
-  content:"";
-  position:absolute;
-  bottom:0; left:0; width:100%; height:2px;
-  background: linear-gradient(90deg, #2364a5, #2c7dce, #5aa0f0);
-  transform: scaleX(0); transform-origin:left; transition: transform 0.3s ease;
-}
-.main-nav a:hover::after { transform: scaleX(1); }
+  /* ナビ */
+  .main-nav ul { display:flex; list-style:none; gap:2rem; }
+  .main-nav a {
+    color:#fff;
+    text-decoration:none;
+    font-weight:bold;
+    position:relative;
+    padding-bottom:4px;
+  }
+  .main-nav a::after {
+    content:"";
+    position:absolute;
+    bottom:0; left:0; width:100%; height:2px;
+    background: linear-gradient(90deg, #2364a5, #2c7dce, #5aa0f0);
+    transform: scaleX(0);
+    transform-origin:left;
+    transition: transform 0.3s ease;
+  }
+  .main-nav a:hover::after { transform: scaleX(1); }
 
-/* ハンバーガー */
-.hamburger { display:none; flex-direction:column; justify-content:space-between; width:25px; height:20px; cursor:pointer; }
-.hamburger span { display:block; height:3px; width:100%; background:#fff; border-radius:2px; }
+  /* ハンバーガー */
+  .hamburger { display:none; flex-direction:column; justify-content:space-between; width:25px; height:20px; cursor:pointer; }
+  .hamburger span { display:block; height:3px; width:100%; background:#fff; border-radius:2px; }
 
-/* --- フッター --- */
-.site-footer { text-align:center; padding:2rem; background:#000; border-top:1px solid #222; }
+  /* --- フッター --- */
+  .site-footer { text-align:center; padding:2rem; background:#000; border-top:1px solid #222; }
 
-/* --- スマホ対応 --- */
-@media(max-width:768px){
-  .main-nav { display:none; position:absolute; top:100%; left:0; width:100%; background: rgba(0,0,0,0.9); flex-direction:column; }
-  .main-nav ul { flex-direction:column; gap:0; }
-  .main-nav li { border-bottom:1px solid #222; }
-  .main-nav a { padding:1rem; display:block; }
-  .hamburger { display:flex; }
-}
-
-/* ナビ開閉用クラス */
-.main-nav.open { display:flex; }
+  /* --- スマホ対応 --- */
+  @media(max-width:768px){
+    .main-nav { display:none; position:absolute; top:100%; left:0; width:100%; background: rgba(0,0,0,0.9); flex-direction:column; }
+    .main-nav ul { flex-direction:column; gap:0; }
+    .main-nav li { border-bottom:1px solid #222; }
+    .main-nav a { padding:1rem; display:block; }
+    .hamburger { display:flex; }
+  }
+  .main-nav.open { display:flex; }
 </style>
 </head>
 <body>
 
 <header class="site-header">
-  <a href="#" class="logo"><img src="images/logo.png" alt="WELL-LAB Logo" style="height:40px;"></a>
+  <a href="#" class="logo"><img src="images/logo.png" alt="WELL-LAB Logo"></a>
   <nav class="main-nav">
     <ul>
       <li><a href="#hero">TOP</a></li>
@@ -115,10 +123,15 @@ a.btn {
       <li><a href="#contact">CONTACT</a></li>
     </ul>
   </nav>
+  <div class="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
 </header>
 
 <!-- Hero -->
-<section id="hero" data-slides="images/slide1.png,images/slide2.jpg,images/slidee3.jpg">
+<section id="hero" data-slides="images/slide1.jpg,images/slide2.jpg,images/slide3.jpg">
   <h1>WELL-LAB.</h1>
   <p>個人にあった医療福祉のシステムを創る学生集団</p>
   <a href="#about" class="btn">もっと知る</a>
@@ -139,14 +152,14 @@ a.btn {
 </section>
 
 <!-- News -->
-<section id="news" data-slides="images/sample10.jpg,images/sample11.jpg,images/sample12.jpg">
+<section id="news" data-slides="images/news1.jpg,images/news2.jpg,images/news3.jpg">
   <h2>NEWS</h2>
   <p>メンバーの主な活動情報やWELL-LAB.運営からの情報をお知らせします。</p>
   <a href="NEWS.html" class="btn">すべてのお知らせを見る</a>
 </section>
 
 <!-- Contact -->
-<section id="contact" data-slides="images/sample13.jpg,images/sample14.jpg">
+<section id="contact" data-slides="images/contact1.jpg,images/contact2.jpg">
   <h2>Contact</h2>
   <p>お問い合わせはこちらから</p>
 </section>
@@ -157,49 +170,43 @@ a.btn {
 </footer>
 
 <script>
-// ハンバーガークリックでナビ開閉
-const hamburger = document.querySelector('.hamburger');
-const nav = document.querySelector('.main-nav');
-hamburger.addEventListener('click', () => nav.classList.toggle('open'));
+  // ハンバーガー開閉
+  const hamburger = document.querySelector('.hamburger');
+  const nav = document.querySelector('.main-nav');
+  hamburger.addEventListener('click',()=>nav.classList.toggle('open'));
 
-// スクロールでヘッダー背景変化
-const header = document.querySelector('.site-header');
-window.addEventListener('scroll', () => {
-  header.style.background = (window.scrollY > 50) ? 'rgba(0,0,0,0.95)' : 'rgba(0,0,0,0.7)';
-});
+  // ヘッダー背景変化
+  const header = document.querySelector('.site-header');
+  window.addEventListener('scroll',()=>{ header.style.background = (window.scrollY>50)?'rgba(0,0,0,0.95)':'rgba(0,0,0,0.7)'; });
 
-sections.forEach(sec => {
-  const slides = sec.dataset.slides.split(',');
-  let index = 0;
-  let currentImg = null;
+  // 背景スライドショー
+  const sections = document.querySelectorAll('section[data-slides]');
+  sections.forEach(sec=>{
+    const slides = sec.dataset.slides.split(',');
+    let index=0;
+    let currentImg=null;
 
-  // 最初の画像
-  const firstImg = document.createElement('img');
-  firstImg.src = slides[0];
-  firstImg.classList.add('bg-slide','show');
-  sec.appendChild(firstImg);
-  currentImg = firstImg;
+    const firstImg=document.createElement('img');
+    firstImg.src=slides[0];
+    firstImg.classList.add('bg-slide','show');
+    sec.appendChild(firstImg);
+    currentImg=firstImg;
 
-  setInterval(() => {
-    index = (index + 1) % slides.length;
+    setInterval(()=>{
+      index=(index+1)%slides.length;
+      const nextImg=document.createElement('img');
+      nextImg.src=slides[index];
+      nextImg.classList.add('bg-slide');
+      sec.appendChild(nextImg);
 
-    const nextImg = document.createElement('img');
-    nextImg.src = slides[index];
-    nextImg.classList.add('bg-slide');
-    sec.appendChild(nextImg);
+      setTimeout(()=>{
+        nextImg.classList.add('show');
+        currentImg.classList.remove('show');
+        setTimeout(()=>{ currentImg.remove(); currentImg=nextImg; },1000);
+      },50);
 
-    // フェード切替
-    setTimeout(() => {
-      nextImg.classList.add('show');
-      currentImg.classList.remove('show');
-      setTimeout(() => {
-        currentImg.remove(); // 古い画像削除
-        currentImg = nextImg; // 現在画像を更新
-      }, 1000);
-    }, 50);
-
-  }, 5000);
-});
+    },5000);
+  });
 </script>
 
 </body>
