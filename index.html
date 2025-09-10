@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WELL-LAB | 共通レイアウトサンプル</title>
+  <style>
+    /* --- 共通レイアウトCSS --- */
+
+    /* ヘッダー */
+    .site-header {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      z-index: 1000;
+      background: transparent;
+      transition: background 0.3s ease;
+    }
+    .site-header.scrolled {
+      background: rgba(35,100,165,0.9); /* #2364a5ベースの半透明 */
+      backdrop-filter: blur(8px);
+    }
+    .header-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+    }
+    .logo img {
+      height: 40px;
+    }
+    .main-nav ul {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .main-nav a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .main-nav .nav-cta {
+      padding: 0.5rem 1rem;
+      border-radius: 30px;
+      background: linear-gradient(90deg, #2364a5, #2c7dce, #5aa0f0);
+      color: #fff;
+      transition: 0.3s;
+    }
+    .main-nav .nav-cta:hover {
+      opacity: 0.85;
+    }
+
+    /* ハンバーガー（スマホ用） */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+    }
+    .hamburger span {
+      display: block;
+      width: 25px;
+      height: 3px;
+      background: #fff;
+    }
+
+    /* フッター */
+    .site-footer {
+      position: relative;
+      color: #fff;
+      text-align: center;
+      padding: 3rem 1rem 1rem;
+      background: linear-gradient(135deg, #2364a5, #2c7dce, #5aa0f0);
+      margin-top: 200px; /* デモ用余白 */
+    }
+    .footer-content {
+      position: relative;
+      z-index: 1;
+    }
+    .footer-logo {
+      width: 120px;
+      margin-bottom: 1rem;
+    }
+    .sns-links a {
+      margin: 0 1rem;
+      color: #fff;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    /* 波アニメーション */
+    .wave-container {
+      position: absolute;
+      top: -60px;
+      left: 0;
+      width: 100%;
+      overflow: hidden;
+      line-height: 0;
+    }
+    .wave path {
+      fill: rgba(255,255,255,0.6);
+      animation: waveMove 6s linear infinite;
+    }
+    @keyframes waveMove {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* レスポンシブ */
+    @media (max-width: 768px) {
+      .main-nav {
+        display: none; /* 初期非表示 */
+      }
+      .hamburger {
+        display: flex;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ヘッダー -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="logo">
+        <img src="images/logo.png" alt="WELL-LAB Logo" />
+      </a>
+      <nav class="main-nav">
+        <ul>
+          <li><a href="index.html">TOP</a></li>
+          <li><a href="aboutus.html">ABOUT US</a></li>
+          <li><a href="products.html">PRODUCTS</a></li>
+          <li><a href="NEWS.html">NEWS</a></li>
+          <li><a href="contact.html" class="nav-cta">CONTACT</a></li>
+        </ul>
+      </nav>
+      <!-- ハンバーガーメニュー（スマホ用） -->
+      <div class="hamburger">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- メインコンテンツ（デモ用） -->
+  <main style="padding-top:100px; text-align:center;">
+    <h1>WELL-LAB サイト大改修 サンプル</h1>
+    <p>ここに各ページの内容が入ります。</p>
+    <p>スクロールしてフッターを確認してください。</p>
+  </main>
+
+  <!-- フッター -->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <img src="images/logo.png" alt="Logo" class="footer-logo" />
+      <p>© 2025 WELL-LAB.</p>
+      <div class="sns-links">
+        <a href="#">X</a>
+        <a href="#">E-mail</a>
+      </div>
+    </div>
+    <!-- 波アニメーション -->
+    <div class="wave-container">
+      <svg class="wave" viewBox="0 0 1200 150" preserveAspectRatio="none">
+        <path d="M0,40 C150,100 350,-20 600,40 C850,100 1050,-20 1200,40 V150 H0 Z"></path>
+      </svg>
+    </div>
+  </footer>
+
+  <!-- スクロールでヘッダーに色を付けるJS -->
+  <script>
+    window.addEventListener("scroll", function() {
+      const header = document.querySelector(".site-header");
+      header.classList.toggle("scrolled", window.scrollY > 50);
+    });
+  </script>
+</body>
+</html>
