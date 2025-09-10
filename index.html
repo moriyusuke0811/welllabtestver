@@ -1,223 +1,154 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>WELL-LAB | テスト版</title>
-  <style>
-    /* --- 共通 --- */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Helvetica Neue', Arial, sans-serif;
-      background: #000;
-      color: #fff;
-      overflow-x: hidden;
-      scroll-snap-type: y mandatory;
-    }
-    section {
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      scroll-snap-align: start;
-      padding: 2rem;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    h1, h2 { font-weight: 700; letter-spacing: 1px; z-index: 1; }
-    h1 { font-size: 3rem; margin-bottom: 1rem; }
-    p { max-width: 700px; line-height: 1.6; margin: 0 auto 2rem; z-index: 1; }
-    a { color: #fff; text-decoration: none; font-weight: bold; z-index: 1; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WELL-LAB | セクション別スライドショー</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body { height:100%; scroll-behavior:smooth; font-family:sans-serif; }
+  body { background:#000; color:#fff; overflow-x:hidden; scroll-snap-type:y mandatory; }
 
-    /* --- ヘッダー --- */
-    .site-header {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%;
-      z-index: 1000;
-      background: rgba(0,0,0,0.7);
-      backdrop-filter: blur(8px);
-    }
-    .header-inner {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 2rem;
-    }
-    .logo img { height: 40px; }
-    .main-nav ul { list-style: none; display: flex; gap: 2rem; }
-    .main-nav a {
-      color: #fff;
-      position: relative;
-      font-weight: 500;
-    }
-    .main-nav a::after {
-      content: "";
-      position: absolute;
-      bottom: -5px; left: 0;
-      width: 100%; height: 2px;
-      background: linear-gradient(90deg, #2364a5, #2c7dce, #5aa0f0);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.3s ease;
-    }
-    .main-nav a:hover::after { transform: scaleX(1); }
+  section {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    scroll-snap-align:start;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #fff;
+    overflow: hidden;
+  }
 
-    /* --- CTAボタン --- */
-    .btn {
-      display: inline-block;
-      padding: 0.8rem 2rem;
-      border-radius: 30px;
-      background: linear-gradient(90deg, #2364a5, #2c7dce, #5aa0f0);
-      color: #fff;
-      transition: 0.3s;
-      z-index: 1;
-    }
-    .btn:hover { opacity: 0.85; }
+  section::before {
+    content:"";
+    position:absolute;
+    top:0; left:0;
+    width:100%; height:100%;
+    background: rgba(0,0,0,0.4);
+    z-index:0;
+  }
 
-    /* --- 背景スライドショー --- */
-    .bg-slideshow {
-      position: absolute; top:0; left:0;
-      width: 100%; height: 100%;
-      z-index: 0;
-      overflow: hidden;
-    }
-    .bg-slideshow img {
-      position: absolute;
-      width: 100%; height: 100%;
-      object-fit: cover;
-      opacity: 0;
-      animation: fade 15s infinite;
-    }
-    .bg-slideshow img:nth-child(1) { animation-delay: 0s; }
-    .bg-slideshow img:nth-child(2) { animation-delay: 5s; }
-    .bg-slideshow img:nth-child(3) { animation-delay: 10s; }
-    @keyframes fade {
-      0% { opacity: 0; }
-      10% { opacity: 1; }
-      30% { opacity: 1; }
-      40% { opacity: 0; }
-      100% { opacity: 0; }
-    }
-    section::after {
-      content: "";
-      position: absolute; top:0; left:0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.5);
-      z-index: 0;
-    }
+  section h1, section h2, section p, section a {
+    position: relative;
+    z-index:1;
+  }
 
-    /* --- フッター --- */
-    .site-footer {
-      background: #000;
-      text-align: center;
-      padding: 2rem 1rem;
-      border-top: 1px solid #222;
-      position: relative;
-    }
-    .footer-logo { width: 120px; margin-bottom: 1rem; }
-    .sns-links a { margin: 0 1rem; }
+  h1 { font-size:3rem; margin-bottom:1rem; }
+  h2 { font-size:2rem; margin-bottom:1rem; }
+  p { max-width:700px; margin:0 auto 2rem; line-height:1.6; }
 
-    /* --- アニメーション --- */
-    .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
-    .fade-in.show { opacity: 1; transform: translateY(0); }
-    .slide-left { opacity: 0; transform: translateX(-50px); transition: opacity 0.8s ease, transform 0.8s ease; }
-    .slide-left.show { opacity: 1; transform: translateX(0); }
-    .slide-right { opacity: 0; transform: translateX(50px); transition: opacity 0.8s ease, transform 0.8s ease; }
-    .slide-right.show { opacity: 1; transform: translateX(0); }
+  a.btn {
+    display:inline-block;
+    padding:0.8rem 2rem;
+    border-radius:30px;
+    background: linear-gradient(90deg, #2364a5, #2c7dce, #5aa0f0);
+    color:#fff;
+    text-decoration:none;
+  }
 
-    /* --- レスポンシブ --- */
-    @media (max-width: 768px) {
-      h1 { font-size: 2rem; }
-      .main-nav { display: none; }
-    }
-  </style>
+  /* ヘッダー */
+  .site-header {
+    position:fixed; top:0; left:0; width:100%;
+    background: rgba(0,0,0,0.7); backdrop-filter:blur(8px);
+    padding:1rem 2rem; display:flex; justify-content:space-between; align-items:center; z-index:1000;
+  }
+  .main-nav ul { display:flex; list-style:none; gap:2rem; }
+  .main-nav a { color:#fff; text-decoration:none; font-weight:bold; }
+
+  /* フッター */
+  .site-footer { text-align:center; padding:2rem; background:#000; border-top:1px solid #222; }
+
+  /* 背景スライドショー */
+  .bg-slide { position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:0; transition: opacity 1s ease; opacity:0; }
+  .bg-slide.show { opacity:1; }
+</style>
 </head>
 <body>
-  <!-- ヘッダー -->
-  <header class="site-header">
-    <div class="header-inner">
-      <a href="index.html" class="logo"><img src="images/logo.png" alt="WELL-LAB Logo" /></a>
-      <nav class="main-nav">
-        <ul>
-          <li><a href="#hero">TOP</a></li>
-          <li><a href="#about">ABOUT US</a></li>
-          <li><a href="#products">PRODUCTS</a></li>
-          <li><a href="#news">NEWS</a></li>
-          <li><a href="#contact">CONTACT</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
 
-  <!-- Hero -->
-  <section id="hero">
-    <div class="bg-slideshow">
-      <img src="images/slide1.png" alt="">
-    </div>
-    <div class="hero-content fade-in">
-      <h1>WELL-LAB.</h1>
-      <p>個人にあった医療福祉のシステムを創る学生集団</p>
-      <a href="#about" class="btn">もっと知る</a>
-    </div>
-  </section>
+<header class="site-header">
+  <a href="#" class="logo"><img src="images/logo.png" alt="WELL-LAB Logo" style="height:40px;"></a>
+  <nav class="main-nav">
+    <ul>
+      <li><a href="#hero">TOP</a></li>
+      <li><a href="#about">ABOUT US</a></li>
+      <li><a href="#products">PRODUCTS</a></li>
+      <li><a href="#news">NEWS</a></li>
+      <li><a href="#contact">CONTACT</a></li>
+    </ul>
+  </nav>
+</header>
 
-  <!-- About -->
-  <section id="about">
-    <div class="bg-slideshow">
-      <img src="images/about1.jpg" alt="">
-      <img src="images/about2.jpg" alt="">
-      <img src="images/about3.jpg" alt="">
-    </div>
-    <h2 class="slide-left">What is WELL-LAB.?</h2>
-    <p class="fade-in">ヘルスケアや健康管理に関するシステムを開発する学生集団。ノーマライゼーションな社会を創出するリベラル空間です。</p>
-    <a href="aboutus.html" class="btn slide-right">詳しく見る</a>
-  </section>
+<!-- Hero -->
+<section id="hero" data-slides="images/slide1.png,images/slide2.jpg,images/slide3.jpg">
+  <h1>WELL-LAB.</h1>
+  <p>個人にあった医療福祉のシステムを創る学生集団</p>
+  <a href="#about" class="btn">もっと知る</a>
+</section>
 
-  <!-- Products -->
-  <section id="products">
-    <div class="bg-slideshow">
-      <img src="images/prod1.jpg" alt="">
-      <img src="images/prod2.jpg" alt="">
-      <img src="images/prod3.jpg" alt="">
-    </div>
-    <h2 class="slide-left">Products</h2>
-    <p class="fade-in">メンバーが作成した個人個人に寄り添った様々なシステムや製品を紹介します。</p>
-    <a href="products.html" class="btn slide-right">プロダクトを見る</a>
-  </section>
+<!-- About -->
+<section id="about" data-slides="images/about1.jpg,images/about2.jpg,images/about3.jpg">
+  <h2>What is WELL-LAB.?</h2>
+  <p>ヘルスケアや健康管理に関するシステムを開発する学生集団。ノーマライゼーションな社会を創出するリベラル空間です。</p>
+  <a href="aboutus.html" class="btn">詳しく見る</a>
+</section>
 
-  <!-- News -->
-  <section id="news">
-    <div class="bg-slideshow">
-      <img src="images/news1.jpg" alt="">
-      <img src="images/news2.jpg" alt="">
-      <img src="images/news3.jpg" alt="">
-    </div>
-    <h2 class="slide-left">NEWS</h2>
-    <p class="fade-in">メンバーの主な活動情報やWELL-LAB.運営からの情報をお知らせします。</p>
-    <a href="NEWS.html" class="btn">すべてのお知らせを見る</a>
-  </section>
+<!-- Products -->
+<section id="products" data-slides="images/prod1.jpg,images/prod2.jpg,images/prod3.jpg">
+  <h2>Products</h2>
+  <p>メンバーが作成した個人個人に寄り添った様々なシステムや製品を紹介します。</p>
+  <a href="products.html" class="btn">プロダクトを見る</a>
+</section>
 
-  <!-- Footer -->
-  <footer class="site-footer" id="contact">
-    <img src="images/logo.png" alt="Logo" class="footer-logo" />
-    <p>© 2025 WELL-LAB.</p>
-    <div class="sns-links">
-      <a href="#">X</a>
-      <a href="#">E-mail</a>
-    </div>
-  </footer>
+<!-- News -->
+<section id="news" data-slides="images/news1.jpg,images/news2.jpg,images/news3.jpg">
+  <h2>NEWS</h2>
+  <p>メンバーの主な活動情報やWELL-LAB.運営からの情報をお知らせします。</p>
+  <a href="NEWS.html" class="btn">すべてのお知らせを見る</a>
+</section>
 
-  <script>
-    const targets = document.querySelectorAll('.fade-in, .slide-left, .slide-right');
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if(entry.isIntersecting) { entry.target.classList.add('show'); }
-      });
-    }, { threshold: 0.2 });
-    targets.forEach(t => observer.observe(t));
-  </script>
+<!-- Contact -->
+<section id="contact" data-slides="images/contact1.jpg,images/contact2.jpg">
+  <h2>Contact</h2>
+  <p>お問い合わせはこちらから</p>
+</section>
+
+<footer class="site-footer">
+  <img src="images/logo.png" alt="Logo" style="width:120px;">
+  <p>© 2025 WELL-LAB.</p>
+</footer>
+
+<script>
+  // 各セクションに背景画像を設定して自動切替
+  const sections = document.querySelectorAll('section[data-slides]');
+  sections.forEach(sec => {
+    const slides = sec.dataset.slides.split(',');
+    let index = 0;
+
+    // 最初の画像表示
+    const imgEl = document.createElement('img');
+    imgEl.src = slides[index];
+    imgEl.classList.add('bg-slide', 'show');
+    sec.appendChild(imgEl);
+
+    setInterval(() => {
+      const prev = imgEl;
+      index = (index + 1) % slides.length;
+
+      const newImg = document.createElement('img');
+      newImg.src = slides[index];
+      newImg.classList.add('bg-slide');
+      sec.appendChild(newImg);
+
+      setTimeout(()=>{ newImg.classList.add('show'); prev.classList.remove('show'); 
+        setTimeout(()=>prev.remove(),1000);
+      },50);
+
+    }, 5000); // 5秒ごとに切替
+  });
+</script>
+
 </body>
 </html>
