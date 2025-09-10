@@ -3,12 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WELL-LAB | セクション別スライドショー</title>
+<title>WELL-LAB | サンプルスライド</title>
 <style>
   * { margin:0; padding:0; box-sizing:border-box; }
   html, body { height:100%; scroll-behavior:smooth; font-family:sans-serif; }
   body { background:#000; color:#fff; overflow-x:hidden; scroll-snap-type:y mandatory; }
 
+  /* --- セクション共通 --- */
   section {
     position: relative;
     width: 100%;
@@ -17,29 +18,42 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     text-align: center;
-    color: #fff;
     overflow: hidden;
+    color:#fff;
   }
 
-  section::before {
+  /* --- 黒オーバーレイ --- */
+  section::after {
     content:"";
     position:absolute;
     top:0; left:0;
     width:100%; height:100%;
-    background: rgba(0,0,0,0.6); /* 透明度0.6で暗め */
+    background: rgba(0,0,0,0.6);
     z-index:0;
   }
 
+  /* --- 背景画像 --- */
+  .bg-slide {
+    position:absolute;
+    top:0; left:0;
+    width:100%; height:100%;
+    object-fit:cover;
+    z-index:-1; /* オーバーレイより下 */
+    opacity:0;
+    transition: opacity 1s ease;
+  }
+  .bg-slide.show { opacity:1; }
+
+  /* --- 文字・ボタン --- */
   section h1, section h2, section p, section a {
     position: relative;
     z-index:1;
   }
-
   h1 { font-size:3rem; margin-bottom:1rem; }
   h2 { font-size:2rem; margin-bottom:1rem; }
   p { max-width:700px; margin:0 auto 2rem; line-height:1.6; }
-
   a.btn {
     display:inline-block;
     padding:0.8rem 2rem;
@@ -49,7 +63,7 @@
     text-decoration:none;
   }
 
-  /* ヘッダー */
+  /* --- ヘッダー --- */
   .site-header {
     position:fixed; top:0; left:0; width:100%;
     background: rgba(0,0,0,0.7); backdrop-filter:blur(8px);
@@ -58,21 +72,14 @@
   .main-nav ul { display:flex; list-style:none; gap:2rem; }
   .main-nav a { color:#fff; text-decoration:none; font-weight:bold; }
 
-  /* フッター */
+  /* --- フッター --- */
   .site-footer { text-align:center; padding:2rem; background:#000; border-top:1px solid #222; }
-
-  /* 背景スライドショー */
-  .bg-slide { 
-    position:absolute; top:0; left:0; width:100%; height:100%; 
-    object-fit:cover; z-index:0; transition: opacity 1s ease; opacity:0; 
-  }
-  .bg-slide.show { opacity:1; }
 </style>
 </head>
 <body>
 
 <header class="site-header">
-  <a href="#" class="logo"><img src="images/logo.png" alt="WELL-LAB Logo" style="height:40px;"></a>
+  <a href="#" class="logo"><img src="images/sample_logo.png" alt="WELL-LAB Logo" style="height:40px;"></a>
   <nav class="main-nav">
     <ul>
       <li><a href="#hero">TOP</a></li>
@@ -85,58 +92,57 @@
 </header>
 
 <!-- Hero -->
-<section id="hero" data-slides="images/slide1.png,images/slide2.jpg,images/slide3.jpg">
+<section id="hero" data-slides="images/sample1.jpg,images/sample2.jpg,images/sample3.jpg">
   <h1>WELL-LAB.</h1>
   <p>個人にあった医療福祉のシステムを創る学生集団</p>
   <a href="#about" class="btn">もっと知る</a>
 </section>
 
 <!-- About -->
-<section id="about" data-slides="images/about1.jpg,images/about2.jpg,images/about3.jpg">
+<section id="about" data-slides="images/sample4.jpg,images/sample5.jpg,images/sample6.jpg">
   <h2>What is WELL-LAB.?</h2>
   <p>ヘルスケアや健康管理に関するシステムを開発する学生集団。ノーマライゼーションな社会を創出するリベラル空間です。</p>
   <a href="aboutus.html" class="btn">詳しく見る</a>
 </section>
 
 <!-- Products -->
-<section id="products" data-slides="images/prod1.jpg,images/prod2.jpg,images/prod3.jpg">
+<section id="products" data-slides="images/sample7.jpg,images/sample8.jpg,images/sample9.jpg">
   <h2>Products</h2>
   <p>メンバーが作成した個人個人に寄り添った様々なシステムや製品を紹介します。</p>
   <a href="products.html" class="btn">プロダクトを見る</a>
 </section>
 
 <!-- News -->
-<section id="news" data-slides="images/news1.jpg,images/news2.jpg,images/news3.jpg">
+<section id="news" data-slides="images/sample10.jpg,images/sample11.jpg,images/sample12.jpg">
   <h2>NEWS</h2>
   <p>メンバーの主な活動情報やWELL-LAB.運営からの情報をお知らせします。</p>
   <a href="NEWS.html" class="btn">すべてのお知らせを見る</a>
 </section>
 
 <!-- Contact -->
-<section id="contact" data-slides="images/contact1.jpg,images/contact2.jpg">
+<section id="contact" data-slides="images/sample13.jpg,images/sample14.jpg">
   <h2>Contact</h2>
   <p>お問い合わせはこちらから</p>
 </section>
 
 <footer class="site-footer">
-  <img src="images/logo.png" alt="Logo" style="width:120px;">
+  <img src="images/sample_logo.png" alt="Logo" style="width:120px;">
   <p>© 2025 WELL-LAB.</p>
 </footer>
 
 <script>
-  // 各セクションに背景画像を設定して自動切替
   const sections = document.querySelectorAll('section[data-slides]');
   sections.forEach(sec => {
     const slides = sec.dataset.slides.split(',');
     let index = 0;
 
-    // 最初の画像を表示
     const imgEl = document.createElement('img');
     imgEl.src = slides[index];
     imgEl.classList.add('bg-slide', 'show');
     sec.appendChild(imgEl);
 
     setInterval(() => {
+      const prev = imgEl;
       index = (index + 1) % slides.length;
 
       const newImg = document.createElement('img');
@@ -144,14 +150,11 @@
       newImg.classList.add('bg-slide');
       sec.appendChild(newImg);
 
-      // フェードイン/アウト
-      setTimeout(()=>{ newImg.classList.add('show'); imgEl.classList.remove('show'); 
-        setTimeout(()=> imgEl.remove(), 1000);
+      setTimeout(()=>{ 
+        newImg.classList.add('show'); 
+        prev.classList.remove('show'); 
+        setTimeout(()=>prev.remove(),1000);
       },50);
-
-      // 次回のためにimgElを更新
-      imgEl.src = newImg.src; 
-      imgEl.className = newImg.className;
 
     }, 5000); // 5秒ごとに切替
   });
