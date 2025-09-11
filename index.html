@@ -40,6 +40,18 @@
   z-index: 2;
   cursor: pointer;
 }
+/* --- アニメーション初期状態 --- */
+section {
+  opacity: 0;
+  transform: translateY(50px); /* 下から少し上がってくる */
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+/* --- 表示されたとき --- */
+section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
 
 /* 上下にゆっくり揺れるアニメーション */
 @keyframes bounce {
@@ -200,6 +212,21 @@
   const hamburger = document.querySelector('.hamburger');
   const nav = document.querySelector('.main-nav');
   hamburger.addEventListener('click',()=>nav.classList.toggle('open'));
+  // Intersection Observer でアニメーションを発火
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add("visible");
+      }
+    });
+  },{
+    threshold: 0.3 // 30%見えたら発火
+  });
+
+  document.querySelectorAll("section").forEach(sec=>{
+    observer.observe(sec);
+  });
+
 
   // ヘッダー背景変化
   const header = document.querySelector('.site-header');
