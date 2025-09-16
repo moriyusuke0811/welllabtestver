@@ -217,22 +217,22 @@
   document.querySelectorAll("section").forEach(sec=> observer.observe(sec));
 
   // ヘッダー背景変化（上スクロールで濃く、下スクロールで薄く）
-const header = document.querySelector('.site-header');
-let lastScrollY = window.scrollY;
+  const header = document.querySelector('.site-header');
+  let lastScrollY = window.scrollY;
 
-window.addEventListener('scroll', () => {
-  const currentY = window.scrollY;
+  window.addEventListener('scroll', () => {
+    const currentY = window.scrollY;
 
-  if (currentY > lastScrollY) {
-    // 下にスクロール → 薄め
-    header.style.background = 'rgba(0,0,0,0.7)';
-  } else {
-    // 上にスクロール → 濃く
-    header.style.background = 'rgba(0,0,0,0.95)';
-  }
-
-  lastScrollY = currentY;
-});
+    if (currentY > lastScrollY) {
+      // 下にスクロール → 薄く
+      header.style.background = 'rgba(0,0,0,0.7)';
+    } else if (currentY < lastScrollY) {
+      // 上にスクロール → 濃く
+      header.style.background = 'rgba(0,0,0,0.95)';
+    }
+    
+    lastScrollY = currentY;
+  });
 
   // 背景スライドショー
   const sections = document.querySelectorAll('section[data-slides]');
