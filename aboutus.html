@@ -38,8 +38,8 @@ html,body{height:100%;font-family:sans-serif;scroll-behavior:smooth;background:#
 }
 .main-nav.open { display:flex; }
 
-/* --- About Us タイトル --- */
-.about-title{
+/* --- About Us タイトル&hero --- */
+.about-title {
   height:15vh;
   display:flex; justify-content:center; align-items:center;
   font-size:clamp(36px,6vw,60px);
@@ -48,24 +48,34 @@ html,body{height:100%;font-family:sans-serif;scroll-behavior:smooth;background:#
   margin-top:64px; /* ヘッダーと被らない */
 }
 
-/* --- hero セクション --- */
-.hero{
-  height:calc(85vh); 
+.hero {
+  height: calc(100vh - 15vh - 64px); /* About Usタイトル+ヘッダー分を引く */
   display:flex; align-items:center; justify-content:center; text-align:center;
   position:relative;
   background: url('images/slide1.jpg') center center / cover no-repeat;
 }
-.hero::before{
+
+.hero::before {
   content:""; position:absolute; inset:0;
-  background: rgba(0,0,0,0.6);
-  z-index:0;
+  background: rgba(0,0,0,0.5); /* 少し薄めに */
+  z-index:1;
 }
-.hero-content{
-  position:relative; z-index:1;
-  opacity:0; transform:translateY(40px); transition:all .8s ease;
+
+.hero-content {
+  position:relative;
+  z-index:2;
+  opacity:0;
+  transform:translateY(40px);
+  transition:all .8s ease;
 }
-.hero-content h1{ font-size:clamp(48px,8vw,80px); color:#fff; margin-bottom:12px; }
-.hero-content p{ max-width:720px; color:rgba(235,245,255,0.9); margin:0 auto; }
+
+.hero-content h1 {
+  font-size:clamp(48px,8vw,80px); color:#fff; margin-bottom:12px;
+}
+.hero-content p {
+  max-width:720px; color:rgba(235,245,255,0.9); margin:0 auto;
+}
+
 
 /* --- section base --- */
 main{ margin-top:2px; }
