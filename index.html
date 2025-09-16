@@ -1,145 +1,203 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WELL-LAB | Index</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>WELL-LAB | Home</title>
 <style>
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body { font-family: sans-serif; margin:0; background:#000; color:#fff; }
+/* -------- reset & base -------- */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;font-family:"Helvetica Neue",Arial,sans-serif;scroll-behavior:smooth}
+body{background:#000;color:#fff;overflow-x:hidden}
 
-  /* --- ヘッダー --- */
-  .site-header {
-    position:fixed;
-    top:0; left:0; width:100%;
-    padding:1rem 2rem;
-    background:rgba(0,0,0,0.85);
-    backdrop-filter:blur(6px);
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    z-index:1000;
-    transition: background 0.4s ease;
-  }
-  .site-header .logo img { height:40px; }
+/* -------- header -------- */
+.site-header{
+  position:fixed;top:0;left:0;width:100%;z-index:1200;
+  display:flex;align-items:center;justify-content:space-between;padding:14px 24px;
+  background:rgba(0,0,0,0.6);backdrop-filter:blur(8px);
+  transition:background .28s ease,box-shadow .28s ease;
+}
+.site-header.scrolled{ background: rgba(0,0,0,0.92); box-shadow:0 6px 30px rgba(0,0,0,.45); }
+.site-header .logo img{ height:40px; display:block }
 
-  .main-nav ul {
-    list-style:none;
-    display:flex;
-    gap:2rem;
-  }
-  .main-nav a {
-    color:#fff;
-    text-decoration:none;
-    font-weight:bold;
-    position:relative;
-    padding-bottom:4px;
-  }
-  /* 下線アニメーション */
-  .main-nav a::after {
-    content:"";
-    position:absolute;
-    bottom:0; left:0; width:100%; height:2px;
-    background: linear-gradient(90deg,#2364a5,#2c7dce,#5aa0f0);
-    transform:scaleX(0);
-    transform-origin:left;
-    transition:transform 0.3s ease;
-  }
-  .main-nav a:hover::after { transform:scaleX(1); }
+/* nav */
+.main-nav ul{ display:flex; gap:20px; list-style:none; align-items:center }
+.main-nav a{
+  color:#fff; text-decoration:none; font-weight:600; padding:8px 6px; position:relative;
+}
+/* 下線アニメーション */
+.main-nav a::after{
+  content:""; position:absolute; left:0; bottom:-6px; height:3px; width:100%;
+  background: linear-gradient(90deg,#2364a5,#2c7dce,#5aa0f0);
+  transform:scaleX(0); transform-origin:left; transition:transform .28s ease;
+}
+.main-nav a:hover::after{ transform:scaleX(1); }
 
-  /* --- ボタン --- */
-  a.btn {
-    display:inline-block;
-    padding:0.8rem 2rem;
-    border-radius:30px;
-    background:linear-gradient(90deg,#2364a5,#2c7dce,#5aa0f0);
-    color:#fff;
-    text-decoration:none;
-    font-weight:bold;
-    transition: all 0.3s ease;
-  }
-  a.btn:hover {
-    transform: translateY(-3px);
-    box-shadow:0 6px 15px rgba(0,0,0,0.3);
-  }
+/* hamburger (small screens) */
+.hamburger{ display:none; width:28px; height:20px; flex-direction:column; justify-content:space-between; cursor:pointer }
+.hamburger span{ display:block; height:3px; background:#fff; border-radius:3px }
 
-  /* --- セクション --- */
-  section {
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    flex-direction:column;
-    padding:4rem 2rem;
-    text-align:center;
-  }
+/* -------- section base -------- */
+section{
+  position:relative; width:100%; min-height:100vh; display:flex; align-items:center; justify-content:center;
+  text-align:center; overflow:hidden;
+}
+.section-inner{
+  position:relative; z-index:2; max-width:1200px; padding: 0 24px;
+  opacity:0; transform:translateY(40px); transition:opacity .75s ease, transform .75s ease;
+}
+.section-inner.visible{ opacity:1; transform:translateY(0); }
 
-  /* --- スマホ対応 --- */
-  .hamburger { display:none; }
-  @media(max-width:768px){
-    .main-nav { display:none; position:absolute; top:100%; left:0; width:100%; background:rgba(0,0,0,0.95); }
-    .main-nav ul { flex-direction:column; gap:0; }
-    .main-nav li { border-bottom:1px solid #222; }
-    .main-nav a { display:block; padding:1rem; }
-    .main-nav.open { display:block; }
-    .hamburger { display:flex; flex-direction:column; justify-content:space-between; width:25px; height:20px; cursor:pointer; }
-    .hamburger span { display:block; height:3px; width:100%; background:#fff; border-radius:2px; }
-  }
+/* text */
+h1{ font-size:clamp(28px,5vw,56px); margin-bottom:12px; letter-spacing:.4px }
+h2{ font-size:clamp(20px,3vw,32px); margin-bottom:12px }
+p{ color:rgba(255,255,255,0.92); line-height:1.6; max-width:900px; margin:0 auto 18px }
+
+/* call-to-action button */
+a.btn{
+  display:inline-block;
+  padding:.7rem 1.8rem;
+  border-radius:28px;
+  background:linear-gradient(90deg,#2364a5,#2c7dce,#5aa0f0);
+  color:#fff;
+  font-weight:700;
+  text-decoration:none;
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+a.btn:hover{
+  transform:translateY(-6px);
+  box-shadow:0 16px 40px rgba(44,125,206,.32);
+}
+
+/* hero arrow */
+.scroll-down{
+  position:absolute; left:50%; bottom:28px; transform:translateX(-50%);
+  width:0;height:0;border-left:12px solid transparent;border-right:12px solid transparent;border-top:18px solid #fff;
+  z-index:2; cursor:pointer; animation:bounce 1.6s infinite;
+}
+@keyframes bounce{
+  0%,20%,50%,80%,100%{ transform:translateX(-50%) translateY(0) } 
+  40%{ transform:translateX(-50%) translateY(10px) } 
+  60%{ transform:translateX(-50%) translateY(6px) }
+}
+
+/* small screens */
+@media(max-width:900px){
+  .main-nav{ display:none; flex-direction:column; background:rgba(0,0,0,0.95); position:absolute; top:100%; left:0; width:100% }
+  .main-nav.open{ display:flex }
+  .hamburger{ display:flex }
+}
+
+/* footer */
+.site-footer{
+  background:linear-gradient(180deg,#040406 0%, #071026 100%);
+  color:#dfefff; text-align:center; padding:48px 20px; border-top:1px solid rgba(255,255,255,0.04)
+}
+.site-footer img{ width:120px; filter:brightness(.95) }
+.site-footer p{ margin-top:12px; color:#9fbfe6 }
+
+/* subtle helper */
+.small-muted{ font-size:14px; color:rgba(255,255,255,0.75) }
 </style>
 </head>
 <body>
 
-<header class="site-header">
-  <a href="#" class="logo"><img src="images/logo.png" alt="WELL-LAB Logo"></a>
+<header class="site-header" id="siteHeader">
+  <div class="logo"><a href="index.html"><img src="images/logo.png" alt="WELL-LAB Logo"></a></div>
   <nav class="main-nav">
     <ul>
       <li><a href="#hero">TOP</a></li>
-      <li><a href="aboutus.html">ABOUT US</a></li>
-      <li><a href="products.html">PRODUCTS</a></li>
-      <li><a href="NEWS.html">NEWS</a></li>
-      <li><a href="contact.html">CONTACT</a></li>
+      <li><a href="aboutus.html">ABOUT</a></li>
+      <li><a href="#products">PRODUCTS</a></li>
+      <li><a href="#news">NEWS</a></li>
+      <li><a href="#contact">CONTACT</a></li>
     </ul>
   </nav>
-  <div class="hamburger">
+  <div class="hamburger" id="hamburger" aria-hidden="true">
     <span></span><span></span><span></span>
   </div>
 </header>
 
-<!-- Hero -->
 <section id="hero">
-  <h1>WELL-LAB.</h1>
-  <p>ひとりひとりに寄り添った研究をする次世代学生集団</p>
-  <a href="#about" class="btn">もっと知る</a>
+  <div class="section-inner">
+    <h1>WELL-LAB.</h1>
+    <p>ひとりひとりに寄り添った研究をする次世代学生集団 — 個別化された医療福祉システムを創ります。</p>
+    <a class="btn" href="aboutus.html">Learn More</a>
+  </div>
+  <div class="scroll-down" aria-hidden="true" title="スクロール"></div>
 </section>
 
-<!-- About -->
 <section id="about">
-  <h2>About Us</h2>
-  <p>学生による未来のヘルスケア研究開発</p>
-  <a href="aboutus.html" class="btn">詳しく見る</a>
+  <div class="section-inner">
+    <h2>What is WELL-LAB.?</h2>
+    <p>ヘルスケア×テクノロジーをつなぎ、誰もが生きやすい社会を目指す学生コミュニティ。研究の発掘・発信・共創を行います。</p>
+    <a class="btn" href="aboutus.html">See More</a>
+  </div>
 </section>
+
+<section id="products">
+  <div class="section-inner">
+    <h2>Products</h2>
+    <p>構想中のプロダクトやメンバーが作ったツールを紹介します。個人に寄り添うデザインが特徴です。</p>
+    <a class="btn" href="products.html">Learn More</a>
+  </div>
+</section>
+
+<section id="news">
+  <div class="section-inner">
+    <h2>NEWS</h2>
+    <p>活動やイベント情報、お知らせを掲載しています。</p>
+    <a class="btn" href="NEWS.html">See More</a>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="section-inner">
+    <h2>Contact</h2>
+    <p class="small-muted">お問い合わせはこちら — メールやSNSでご連絡ください。</p>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <img src="images/logo.png" alt="WELL-LAB" />
+  <p>© 2025 WELL-LAB. / <span class="small-muted">Students for better wellness</span></p>
+</footer>
 
 <script>
-  // ハンバーガー開閉
-  const hamburger=document.querySelector('.hamburger');
-  const nav=document.querySelector('.main-nav');
-  hamburger.addEventListener('click',()=>nav.classList.toggle('open'));
+/* hamburger toggle */
+const hamburger = document.getElementById('hamburger');
+const nav = document.querySelector('.main-nav');
+hamburger.addEventListener('click', ()=> nav.classList.toggle('open'));
 
-  // ヘッダー透明度調整（スクロール方向で変化）
-  let lastScroll=0;
-  const header=document.querySelector('.site-header');
-  window.addEventListener('scroll',()=>{
-    const current=window.scrollY;
-    if(current>lastScroll){ 
-      // 下にスクロール中
-      header.style.background="rgba(0,0,0,0.4)";
-    } else { 
-      // 上にスクロール中
-      header.style.background="rgba(0,0,0,0.9)";
-    }
-    lastScroll=current;
+/* header scroll effect */
+let lastScroll = 0;
+const header = document.getElementById('siteHeader');
+window.addEventListener('scroll', ()=>{
+  const current = window.scrollY;
+  if(current > lastScroll){ 
+    header.style.background="rgba(0,0,0,0.4)";
+  } else { 
+    header.style.background="rgba(0,0,0,0.92)";
+  }
+  lastScroll = current;
+});
+
+/* section fade-in */
+const inners = document.querySelectorAll('.section-inner');
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting) entry.target.classList.add('visible');
   });
-</script>
+},{threshold:0.25});
+inners.forEach(i=>observer.observe(i));
 
+/* scroll-down arrow */
+document.querySelectorAll('.scroll-down').forEach(el=>{
+  el.addEventListener('click', ()=>{
+    const next = el.closest('section').nextElementSibling;
+    if(next) next.scrollIntoView({behavior:'smooth'});
+  });
+});
+</script>
 </body>
 </html>
