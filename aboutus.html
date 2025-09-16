@@ -10,26 +10,56 @@
 html,body{font-family:"Helvetica Neue",Arial,sans-serif;scroll-behavior:smooth}
 body{background:#07070a;color:#e9eef8;line-height:1.65}
 
-/* header (reuse same look) */
+/* header */
 .header01{
   position:fixed;top:0;left:0;width:100%;z-index:1200;
   display:flex;align-items:center;justify-content:space-between;padding:12px 24px;
-  background:rgba(0,0,0,0.6);backdrop-filter:blur(8px);transition:background .28s ease, box-shadow .28s ease;
+  background:rgba(0,0,0,0.1);backdrop-filter:blur(8px);transition:background .28s ease, box-shadow .28s ease;
 }
-.header01.scrolled{ background: rgba(0,0,0,0.9); box-shadow:0 6px 30px rgba(0,0,0,.45); }
+.header01.scrolled{ background: rgba(0,0,0,0.95); box-shadow:0 6px 30px rgba(0,0,0,.45); }
 .header01-logo img{ height:40px }
 .header01-nav ul{ display:flex; gap:18px; list-style:none; align-items:center }
 .header01-nav a{ color:#dbefff; text-decoration:none; font-weight:600; padding:6px 8px; border-radius:6px }
 .header01-nav a:hover{ color:#fff; background: rgba(255,255,255,0.03) }
 
-/* hero (dark but bold) */
+/* hero */
 .hero{
-  min-height:58vh; height:70vh; display:flex; align-items:center; justify-content:center; text-align:center;
-  background: linear-gradient(180deg, rgba(7,10,20,0.95), rgba(12,16,28,0.8));
-  padding:64px 20px;
+  height:100vh; 
+  display:flex; 
+  flex-direction:column; 
+  justify-content:center; 
+  align-items:center; 
+  text-align:center;
+  position:relative;
+  background: url('images/slide1.jpg') center/cover no-repeat;
 }
-.hero h1{ font-size:clamp(32px,6vw,56px); color:#fff; margin-bottom:12px }
-.hero p{ max-width:720px; color:rgba(235,245,255,0.9) }
+.hero::before{
+  content:"";
+  position:absolute; inset:0;
+  background: rgba(0,0,0,0.6);
+  z-index:0;
+}
+.hero-top-title{
+  font-size:clamp(32px,6vw,48px);
+  color:#fff;
+  margin-bottom:1rem;
+  position:relative;
+  z-index:1;
+}
+.hero-content{
+  position:relative;
+  z-index:1;
+}
+.hero-content h1{
+  font-size:clamp(48px,8vw,80px);
+  color:#fff;
+  margin-bottom:12px;
+}
+.hero-content p{
+  max-width:720px; 
+  color:rgba(235,245,255,0.9);
+  margin:0 auto;
+}
 
 /* section base */
 main{ margin-top:2px } /* header covers top  */
@@ -54,16 +84,14 @@ section.visible{ opacity:1; transform:translateY(0) }
 .member-card h3{ color:#d9f1ff; margin-top:12px }
 .member-card p{ color:#bcdaf1; font-size:14px }
 
-/* CTA button (same tooltip style) */
+/* CTA button */
 a.btn{
   display:inline-block; padding:.7rem 1.6rem; border-radius:28px; background:linear-gradient(90deg,#2c7dce,#5aa0f0); color:#07102a; font-weight:700; text-decoration:none;
   transition:transform .25s ease, box-shadow .25s ease; position:relative;
 }
 a.btn:hover{ transform:translateY(-6px); box-shadow:0 16px 40px rgba(44,125,206,.18) }
-a.btn::after{ content:attr(data-tooltip); position:absolute; left:50%; transform:translateX(-50%) translateY(6px); bottom:calc(100% + 10px); background:#0b1117; color:#fff; padding:6px 8px; border-radius:8px; opacity:0; transition:all .18s ease }
-a.btn:hover::after{ opacity:1; transform:translateX(-50%) translateY(0) }
 
-/* footer dark & cool */
+/* footer */
 .site-footer{ background:linear-gradient(180deg,#000,#071426); color:#cfe8ff; text-align:center; padding:64px 20px; border-top:1px solid rgba(255,255,255,0.03) }
 .site-footer img{ width:140px; filter:brightness(0) invert(1) }
 .site-footer .creator{ color:#9fbfe6; margin-top:14px }
@@ -91,7 +119,8 @@ a.btn:hover::after{ opacity:1; transform:translateX(-50%) translateY(0) }
 </header>
 
 <section class="hero">
-  <div>
+  <h1 class="hero-top-title">About Us</h1>
+  <div class="hero-content">
     <h1>WELL-LAB.</h1>
     <p>個人に寄り添い、新しい医療福祉の仕組みを創る学生コミュニティ — 研究をつなぎ、社会へ届けます。</p>
   </div>
@@ -119,7 +148,7 @@ a.btn:hover::after{ opacity:1; transform:translateX(-50%) translateY(0) }
     <div class="profile-text">
       <h2>Our Work<br>私たちの活動</h2>
       <p>研究のPR、学生コミュニティの運営、プロダクト開発、産学連携など多方面で活動。多様な視点で課題解決を試みます。</p>
-      <p><a class="btn" href="contact.html" data-tooltip="お問い合わせはこちら">お問い合わせ</a></p>
+      <p><a class="btn" href="contact.html">お問い合わせ</a></p>
     </div>
   </section>
 
@@ -150,7 +179,7 @@ window.addEventListener('scroll', ()=>{
   if(window.scrollY > 48) headerAbout.classList.add('scrolled'); else headerAbout.classList.remove('scrolled');
 });
 
-/* intersection observer for sections */
+/* intersection observer for sections fade-in */
 const sections = document.querySelectorAll('main section, .hero');
 const io = new IntersectionObserver((entries)=>{
   entries.forEach(e=>{
