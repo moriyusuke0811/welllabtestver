@@ -204,26 +204,34 @@ const hamburger = document.querySelector('.hamburger');
 const nav = document.querySelector('.main-nav');
 hamburger.addEventListener('click',()=>nav.classList.toggle('open'));
 
-// ヘッダー濃淡変化
+// ヘッダー濃淡変化（スクロール方向で変化）
 const header = document.querySelector('.site-header');
+let lastScrollY = window.scrollY;
 window.addEventListener('scroll', ()=>{
-  if(window.scrollY > 50){
-    header.style.background = 'rgba(0,0,0,0.9)';
-  } else {
+  const currentY = window.scrollY;
+  if(currentY > lastScrollY){
+    // 下にスクロール → 薄く
     header.style.background = 'rgba(0,0,0,0.1)';
+  } else if(currentY < lastScrollY){
+    // 上にスクロール → 濃く
+    header.style.background = 'rgba(0,0,0,0.95)';
   }
+  lastScrollY = currentY;
 });
 
 // セクションフェードイン（Hero / Aboutは除外）
 const fadeSections = document.querySelectorAll('.profile-section, .members-section');
 const observer = new IntersectionObserver(entries=>{
   entries.forEach(entry=>{
-    if(entry.isIntersecting) entry.target.style.opacity=1;
-    entry.target.style.transform='translateY(0)';
+    if(entry.isIntersecting){
+      entry.target.style.opacity=1;
+      entry.target.style.transform='translateY(0)';
+    }
   });
 },{threshold:0.2});
 fadeSections.forEach(sec => observer.observe(sec));
 </script>
+
 
 </body>
 </html>
