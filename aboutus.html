@@ -5,16 +5,18 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>WELL-LAB | About Us</title>
 <style>
-/* reset */
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{font-family:"Helvetica Neue",Arial,sans-serif;scroll-behavior:smooth}
-body{background:#07070a;color:#e9eef8;line-height:1.65}
+html,body{font-family:"Helvetica Neue",Arial,sans-serif;scroll-behavior:smooth;height:100%;}
+
+/* body */
+body{background:#07070a;color:#e9eef8;line-height:1.65;}
 
 /* header */
 .header01{
   position:fixed;top:0;left:0;width:100%;z-index:1200;
   display:flex;align-items:center;justify-content:space-between;padding:12px 24px;
   background:rgba(0,0,0,0.1);backdrop-filter:blur(8px);transition:background .28s ease, box-shadow .28s ease;
+  height:64px;
 }
 .header01.scrolled{ background: rgba(0,0,0,0.95); box-shadow:0 6px 30px rgba(0,0,0,.45); }
 .header01-logo img{ height:40px }
@@ -24,7 +26,7 @@ body{background:#07070a;color:#e9eef8;line-height:1.65}
 
 /* About Us 上部タイトル */
 .about-title{
-  height:20vh;
+  height:calc(20vh - 64px); /* ヘッダー分を引く */
   display:flex;
   justify-content:center;
   align-items:center;
@@ -34,18 +36,19 @@ body{background:#07070a;color:#e9eef8;line-height:1.65}
   opacity:0;
   transform:translateY(40px);
   transition:all .8s ease;
+  margin-top:64px; /* ヘッダー分の余白 */
 }
 
 /* hero */
 .hero{
-  height:80vh; 
+  height:calc(80vh); 
   display:flex; 
   flex-direction:column; 
   justify-content:center; 
   align-items:center; 
   text-align:center;
   position:relative;
-  background: url('images/slide1.jpg') center/cover no-repeat;
+  background: url('images/slide1.jpg') center center / cover no-repeat;
 }
 .hero::before{
   content:"";
@@ -56,6 +59,9 @@ body{background:#07070a;color:#e9eef8;line-height:1.65}
 .hero-content{
   position:relative;
   z-index:1;
+  opacity:0;
+  transform:translateY(40px);
+  transition:all .8s ease;
 }
 .hero-content h1{
   font-size:clamp(48px,8vw,80px);
@@ -69,7 +75,7 @@ body{background:#07070a;color:#e9eef8;line-height:1.65}
 }
 
 /* section base */
-main{ margin-top:2px } /* header covers top  */
+main{ margin-top:2px } 
 section{ padding:80px 20px; display:flex; gap:40px; align-items:center; flex-wrap:wrap; opacity:0; transform:translateY(40px); transition:all .8s ease; }
 section.visible, .about-title.visible, .hero-content.visible{ opacity:1; transform:translateY(0) }
 
