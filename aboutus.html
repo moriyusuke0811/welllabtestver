@@ -49,15 +49,15 @@ html,body{height:100%;font-family:sans-serif;scroll-behavior:smooth;background:#
 }
 
 .hero {
-  height: calc(100vh - 15vh - 64px); /* About Usタイトル+ヘッダー分を引く */
-  display:flex; align-items:center; justify-content:center; text-align:center;
-  position:relative;
+  height: calc(100vh - 15vh - 64px);
+  display:flex; align-items:center; justify-content:center;
+  text-align:center; position:relative;
   background: url('images/slide1.jpg') center center / cover no-repeat;
 }
 
 .hero::before {
   content:""; position:absolute; inset:0;
-  background: rgba(0,0,0,0.5); /* 少し薄めに */
+  background: rgba(0,0,0,0.3); /* 少し薄めに */
   z-index:1;
 }
 
