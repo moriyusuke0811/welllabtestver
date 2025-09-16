@@ -216,15 +216,23 @@
   }, { threshold:0.3 });
   document.querySelectorAll("section").forEach(sec=> observer.observe(sec));
 
-  // ヘッダー背景変化
-  const header = document.querySelector('.site-header');
-  let lastScroll = 0;
-  window.addEventListener('scroll',()=>{
-    const sc = window.scrollY;
-    if(sc>lastScroll){ header.style.background='rgba(0,0,0,0.7)'; }
-    else{ header.style.background='rgba(0,0,0,0.95)'; }
-    lastScroll = sc;
-  });
+  // ヘッダー背景変化（上スクロールで濃く、下スクロールで薄く）
+const header = document.querySelector('.site-header');
+let lastScrollY = window.scrollY;
+
+window.addEventListener('scroll', () => {
+  const currentY = window.scrollY;
+
+  if (currentY > lastScrollY) {
+    // 下にスクロール → 薄め
+    header.style.background = 'rgba(0,0,0,0.7)';
+  } else {
+    // 上にスクロール → 濃く
+    header.style.background = 'rgba(0,0,0,0.95)';
+  }
+
+  lastScrollY = currentY;
+});
 
   // 背景スライドショー
   const sections = document.querySelectorAll('section[data-slides]');
