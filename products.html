@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>WELL-LAB. | Products</title>
+  <style>
+    /* ====== 共通スタイル ====== */
+    * {margin:0;padding:0;box-sizing:border-box;}
+    body {font-family:'Segoe UI',sans-serif;line-height:1.6;color:#fff;background:#000;}
+    a {color:#fff;text-decoration:none;}
+    ul {list-style:none;}
+
+    /* ====== ヘッダー ====== */
+    .site-header {
+      position:fixed;top:0;left:0;width:100%;
+      background:rgba(0,0,0,0.7);
+      display:flex;justify-content:space-between;align-items:center;
+      padding:15px 40px;z-index:1000;
+      transition:background 0.3s ease;
+    }
+    .logo {font-size:1.5em;font-weight:bold;}
+    .main-nav {display:flex;gap:20px;}
+    .main-nav a {transition:color 0.3s;}
+    .main-nav a:hover {color:#5aa0f0;}
+    .hamburger {display:none;flex-direction:column;gap:5px;cursor:pointer;}
+    .hamburger span {width:25px;height:3px;background:#fff;}
+
+    /* ====== セクション共通 ====== */
+    section {
+      width:100%;height:100vh;
+      display:flex;flex-direction:column;
+      justify-content:center;align-items:center;
+      text-align:center;
+      scroll-snap-align:start;
+      overflow:hidden;
+      opacity:0;transform:translateY(40px);
+      transition:opacity .75s ease, transform .75s ease;
+    }
+    section.visible {opacity:1;transform:translateY(0);}
+    section h1, section h2, section p, section a {position:relative;z-index:2;}
+
+    /* ====== Hero ====== */
+    .hero {
+      background:url('images/products-hero.jpg') no-repeat center/cover;
+      position:relative;
+      height:100vh;
+      opacity:1 !important;
+      transform:none !important;
+    }
+    .hero::after {
+      content:"";position:absolute;top:0;left:0;right:0;bottom:0;
+      background:rgba(0,0,0,0.5);
+    }
+    .hero-content {
+      position:relative;z-index:1;
+      font-size:2.5em;font-weight:bold;
+    }
+
+    /* ====== Products Section ====== */
+    .products-section {
+      background:#111;
+      padding:100px 20px;
+      opacity:1 !important;
+      transform:none !important;
+    }
+    .products-section h2 {
+      font-size:2.2em;
+      margin-bottom:40px;
+      color:#5aa0f0;
+    }
+    .products-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      gap:30px;
+      max-width:1000px;
+      margin:0 auto;
+    }
+    .product-card {
+      background:#1c1c1c;
+      padding:20px;
+      border-radius:15px;
+      box-shadow:0 4px 10px rgba(0,0,0,0.6);
+      transition:transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .product-card:hover {
+      transform:translateY(-10px);
+      box-shadow:0 8px 20px rgba(0,0,0,0.8);
+    }
+    .product-card img {
+      width:100%;border-radius:10px;margin-bottom:15px;
+    }
+    .product-card h3 {margin-bottom:10px;color:#5aa0f0;}
+    .product-card p {font-size:0.9em;color:#ddd;}
+
+    /* ====== フッター ====== */
+    footer {
+      background:#000;
+      padding:40px 20px;
+      text-align:center;
+      border-top:2px solid #222;
+    }
+    footer p {color:#aaa;font-size:0.9em;}
+
+    /* ====== レスポンシブ ====== */
+    @media(max-width:768px){
+      .main-nav {display:none;flex-direction:column;gap:15px;position:absolute;top:60px;right:20px;background:rgba(0,0,0,0.9);padding:20px;border-radius:10px;}
+      .main-nav.open {display:flex;}
+      .hamburger {display:flex;}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ====== ヘッダー ====== -->
+  <header class="site-header">
+    <div class="logo">WELL-LAB.</div>
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <a href="products.html">Products</a>
+      <a href="aboutus.html">About Us</a>
+      <a href="news.html">News</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="hamburger">
+      <span></span><span></span><span></span>
+    </div>
+  </header>
+
+  <!-- ====== Hero ====== -->
+  <section class="hero">
+    <div class="hero-content">Our Products</div>
+  </section>
+
+  <!-- ====== Products Section ====== -->
+  <section class="products-section">
+    <h2>Products</h2>
+    <div class="products-grid">
+      <div class="product-card">
+        <img src="images/product1.jpg" alt="Product 1">
+        <h3>Product 1</h3>
+        <p>先端技術を活用した革新的なプロダクトです。</p>
+      </div>
+      <div class="product-card">
+        <img src="images/product2.jpg" alt="Product 2">
+        <h3>Product 2</h3>
+        <p>人と社会をつなぐ新しい価値を提供します。</p>
+      </div>
+      <div class="product-card">
+        <img src="images/product3.jpg" alt="Product 3">
+        <h3>Product 3</h3>
+        <p>持続可能な未来を見据えた設計思想を実現。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== フッター ====== -->
+  <footer>
+    <p>&copy; 2025 WELL-LAB. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    // ハンバーガー
+    const hamburger=document.querySelector('.hamburger');
+    const nav=document.querySelector('.main-nav');
+    hamburger.addEventListener('click',()=>nav.classList.toggle('open'));
+
+    // ヘッダー濃淡変化
+    const header=document.querySelector('.site-header');
+    let lastScrollY=window.scrollY;
+    window.addEventListener('scroll',()=>{
+      const currentY=window.scrollY;
+      if(currentY>lastScrollY){
+        header.style.background='rgba(0,0,0,0.1)'; // 下スクロール → 薄く
+      }else if(currentY<lastScrollY){
+        header.style.background='rgba(0,0,0,0.95)'; // 上スクロール → 濃く
+      }
+      lastScrollY=currentY;
+    });
+
+    // フェードイン（HeroとProducts見出しは除外）
+    const fadeSections=document.querySelectorAll('.product-card');
+    const observer=new IntersectionObserver(entries=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          entry.target.style.opacity=1;
+          entry.target.style.transform='translateY(0)';
+        }
+      });
+    },{threshold:0.2});
+    fadeSections.forEach(sec=>observer.observe(sec));
+  </script>
+</body>
+</html>
