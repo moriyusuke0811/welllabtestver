@@ -1,280 +1,145 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>WELL-LAB | Home</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WELL-LAB | Index</title>
 <style>
-/* -------- reset & base -------- */
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;font-family:"Helvetica Neue",Arial,sans-serif;scroll-behavior:smooth}
-body{background:#000;color:#fff;overflow-x:hidden}
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: sans-serif; margin:0; background:#000; color:#fff; }
 
-/* -------- header -------- */
-.site-header{
-  position:fixed;top:0;left:0;width:100%;z-index:1200;
-  display:flex;align-items:center;justify-content:space-between;padding:14px 24px;
-  background:rgba(0,0,0,0.6);backdrop-filter:blur(8px);
-  transition:background .28s ease,box-shadow .28s ease;
-}
-.site-header.scrolled{ background: rgba(0,0,0,0.92); box-shadow:0 6px 30px rgba(0,0,0,.45); }
-.site-header .logo img{ height:40px; display:block; }
+  /* --- ヘッダー --- */
+  .site-header {
+    position:fixed;
+    top:0; left:0; width:100%;
+    padding:1rem 2rem;
+    background:rgba(0,0,0,0.85);
+    backdrop-filter:blur(6px);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    z-index:1000;
+    transition: background 0.4s ease;
+  }
+  .site-header .logo img { height:40px; }
 
-/* nav */
-.main-nav ul{ display:flex; gap:20px; list-style:none; align-items:center }
-.main-nav a{
-  color:#fff; text-decoration:none; font-weight:600; padding:8px 6px; position:relative;
-}
-.main-nav a::after{
-  content:""; position:absolute; left:0; bottom:-6px; height:3px; width:100%;
-  background: linear-gradient(90deg,#2364a5,#2c7dce,#5aa0f0);
-  transform:scaleX(0); transform-origin:left; transition:transform .28s ease;
-}
-.main-nav a:hover::after{ transform:scaleX(1); }
+  .main-nav ul {
+    list-style:none;
+    display:flex;
+    gap:2rem;
+  }
+  .main-nav a {
+    color:#fff;
+    text-decoration:none;
+    font-weight:bold;
+    position:relative;
+    padding-bottom:4px;
+  }
+  /* 下線アニメーション */
+  .main-nav a::after {
+    content:"";
+    position:absolute;
+    bottom:0; left:0; width:100%; height:2px;
+    background: linear-gradient(90deg,#2364a5,#2c7dce,#5aa0f0);
+    transform:scaleX(0);
+    transform-origin:left;
+    transition:transform 0.3s ease;
+  }
+  .main-nav a:hover::after { transform:scaleX(1); }
 
-/* hamburger (small screens) */
-.hamburger{ display:none; width:28px; height:20px; flex-direction:column; justify-content:space-between; cursor:pointer }
-.hamburger span{ display:block; height:3px; background:#fff; border-radius:3px }
+  /* --- ボタン --- */
+  a.btn {
+    display:inline-block;
+    padding:0.8rem 2rem;
+    border-radius:30px;
+    background:linear-gradient(90deg,#2364a5,#2c7dce,#5aa0f0);
+    color:#fff;
+    text-decoration:none;
+    font-weight:bold;
+    transition: all 0.3s ease;
+  }
+  a.btn:hover {
+    transform: translateY(-3px);
+    box-shadow:0 6px 15px rgba(0,0,0,0.3);
+  }
 
-/* -------- section base -------- */
-section{
-  position:relative; width:100%; height:100vh; display:flex; align-items:center; justify-content:center;
-  text-align:center; overflow:hidden; scroll-snap-align:start;
-  /* NOTE: section transform (sway) applied via JS; content animation uses .section-inner */
-}
-section[data-slides]::before{
-  content:""; position:absolute; inset:0;
-  background: rgba(0,0,0,0.65); z-index:1; /* only for sections with slides */
-}
+  /* --- セクション --- */
+  section {
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    padding:4rem 2rem;
+    text-align:center;
+  }
 
-/* background images appended as <img class="bg-slide">, they sit under overlay */
-.bg-slide{
-  position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0;
-  opacity:0; transition:opacity 1s ease;
-}
-.bg-slide.show{ opacity:1; }
-
-/* content box inside section (used for fade-in) */
-.section-inner{
-  position:relative; z-index:2; max-width:1200px; padding: 0 24px;
-  opacity:0; transform:translateY(40px); transition:opacity .75s ease, transform .75s ease;
-}
-.section-inner.visible{ opacity:1; transform:translateY(0); }
-
-/* text */
-h1{ font-size:clamp(28px,5vw,56px); margin-bottom:12px; letter-spacing: .4px }
-h2{ font-size:clamp(20px,3vw,32px); margin-bottom:12px }
-p{ color:rgba(255,255,255,0.92); line-height:1.6; max-width:900px; margin:0 auto 18px }
-
-/* call-to-action button with tooltip-like popup */
-a.btn{
-  display:inline-block; position:relative; overflow:visible;
-  padding:.7rem 1.8rem; border-radius:28px; background:linear-gradient(90deg,#2364a5,#2c7dce,#5aa0f0);
-  color:#fff; font-weight:700; text-decoration:none; transition:transform .25s ease, box-shadow .25s ease;
-}
-a.btn:hover{ transform:translateY(-6px) scale(1.03); box-shadow:0 16px 40px rgba(44,125,206,.32) }
-
-/* tooltip popup on hover (content from data-tooltip attribute) */
-a.btn::after{
-  content:attr(data-tooltip);
-  position:absolute; left:50%; transform:translateX(-50%) translateY(6px);
-  bottom:calc(100% + 10px);
-  background:#0b1220; color:#fff; padding:6px 10px; border-radius:8px; font-size:13px;
-  white-space:nowrap; opacity:0; pointer-events:none; transition:opacity .18s ease, transform .18s ease;
-  box-shadow:0 10px 30px rgba(0,0,0,.45);
-}
-a.btn:hover::after{ opacity:1; transform:translateX(-50%) translateY(0) }
-
-/* Hero arrow */
-.scroll-down{
-  position:absolute; left:50%; bottom:28px; transform:translateX(-50%);
-  width:0;height:0;border-left:12px solid transparent;border-right:12px solid transparent;border-top:18px solid #fff;
-  z-index:2; cursor:pointer; animation:bounce 1.6s infinite;
-}
-@keyframes bounce{
-  0%,20%,50%,80%,100%{ transform:translateX(-50%) translateY(0) } 
-  40%{ transform:translateX(-50%) translateY(10px) } 
-  60%{ transform:translateX(-50%) translateY(6px) }
-}
-
-/* small screens */
-@media(max-width:900px){
-  .main-nav{ display:none }
-  .hamburger{ display:flex }
-}
-
-/* footer */
-.site-footer{
-  background:linear-gradient(180deg,#040406 0%, #071026 100%);
-  color:#dfefff; text-align:center; padding:48px 20px; border-top:1px solid rgba(255,255,255,0.04)
-}
-.site-footer img{ width:120px; filter:brightness(.95) }
-.site-footer p{ margin-top:12px; color:#9fbfe6 }
-
-/* subtle helper */
-.small-muted{ font-size:14px; color:rgba(255,255,255,0.75) }
+  /* --- スマホ対応 --- */
+  .hamburger { display:none; }
+  @media(max-width:768px){
+    .main-nav { display:none; position:absolute; top:100%; left:0; width:100%; background:rgba(0,0,0,0.95); }
+    .main-nav ul { flex-direction:column; gap:0; }
+    .main-nav li { border-bottom:1px solid #222; }
+    .main-nav a { display:block; padding:1rem; }
+    .main-nav.open { display:block; }
+    .hamburger { display:flex; flex-direction:column; justify-content:space-between; width:25px; height:20px; cursor:pointer; }
+    .hamburger span { display:block; height:3px; width:100%; background:#fff; border-radius:2px; }
+  }
 </style>
 </head>
 <body>
 
-<header class="site-header" id="siteHeader">
-  <div class="logo"><a href="index.html"><img src="images/logo.png" alt="WELL-LAB Logo"></a></div>
+<header class="site-header">
+  <a href="#" class="logo"><img src="images/logo.png" alt="WELL-LAB Logo"></a>
   <nav class="main-nav">
     <ul>
       <li><a href="#hero">TOP</a></li>
-      <li><a href="aboutus.html">ABOUT</a></li>
-      <li><a href="#products">PRODUCTS</a></li>
-      <li><a href="#news">NEWS</a></li>
-      <li><a href="#contact">CONTACT</a></li>
+      <li><a href="aboutus.html">ABOUT US</a></li>
+      <li><a href="products.html">PRODUCTS</a></li>
+      <li><a href="NEWS.html">NEWS</a></li>
+      <li><a href="contact.html">CONTACT</a></li>
     </ul>
   </nav>
-  <div class="hamburger" id="hamburger" aria-hidden="true">
+  <div class="hamburger">
     <span></span><span></span><span></span>
   </div>
 </header>
 
-<!-- HERO -->
-<section id="hero" data-slides="images/slide1.jpg,images/slide2.jpg,images/slide3.jpg">
-  <div class="section-inner">
-    <h1>WELL-LAB.</h1>
-    <p>ひとりひとりに寄り添った研究をする次世代学生集団 — 個別化された医療福祉システムを創ります。</p>
-    <a class="btn" href="aboutus.html" data-tooltip="Aboutページへ">Learn More</a>
-  </div>
-  <div class="scroll-down" aria-hidden="true" title="スクロール"></div>
+<!-- Hero -->
+<section id="hero">
+  <h1>WELL-LAB.</h1>
+  <p>ひとりひとりに寄り添った研究をする次世代学生集団</p>
+  <a href="#about" class="btn">もっと知る</a>
 </section>
 
-<!-- ABOUT (section with slideshow background) -->
-<section id="about" data-slides="images/about1.jpg,images/about2.jpg">
-  <div class="section-inner">
-    <h2>What is WELL-LAB.?</h2>
-    <p>ヘルスケア×テクノロジーをつなぎ、誰もが生きやすい社会を目指す学生コミュニティ。研究の発掘・発信・共創を行います。</p>
-    <a class="btn" href="aboutus.html" data-tooltip="詳しく見る">See More</a>
-  </div>
+<!-- About -->
+<section id="about">
+  <h2>About Us</h2>
+  <p>学生による未来のヘルスケア研究開発</p>
+  <a href="aboutus.html" class="btn">詳しく見る</a>
 </section>
-
-<!-- PRODUCTS -->
-<section id="products" data-slides="images/prod1.jpg,images/prod2.jpg">
-  <div class="section-inner">
-    <h2>Products</h2>
-    <p>構想中のプロダクトやメンバーが作ったツールを紹介します。個人に寄り添うデザインが特徴です。</p>
-    <a class="btn" href="products.html" data-tooltip="プロダクト一覧">Learn More</a>
-  </div>
-</section>
-
-<!-- NEWS -->
-<section id="news" data-slides="images/news1.jpg,images/news2.jpg">
-  <div class="section-inner">
-    <h2>NEWS</h2>
-    <p>活動やイベント情報、お知らせを掲載しています。</p>
-    <a class="btn" href="NEWS.html" data-tooltip="お知らせを見る">See More</a>
-  </div>
-</section>
-
-<!-- CONTACT (no background images) -->
-<section id="contact">
-  <div class="section-inner">
-    <h2>Contact</h2>
-    <p class="small-muted">お問い合わせはこちら — メールやSNSでご連絡ください。</p>
-  </div>
-</section>
-
-<footer class="site-footer">
-  <img src="images/logo.png" alt="WELL-LAB" />
-  <p>© 2025 WELL-LAB. / <span class="small-muted">Students for better wellness</span></p>
-</footer>
 
 <script>
-/* ------------------ helper DOM ------------------ */
-const header = document.getElementById('siteHeader');
-const hamburger = document.getElementById('hamburger');
-const mainNav = document.querySelector('.main-nav');
+  // ハンバーガー開閉
+  const hamburger=document.querySelector('.hamburger');
+  const nav=document.querySelector('.main-nav');
+  hamburger.addEventListener('click',()=>nav.classList.toggle('open'));
 
-/* hamburger toggle (small screens) */
-if(hamburger){
-  hamburger.addEventListener('click', ()=> {
-    mainNav.style.display = mainNav.style.display === 'flex' ? '' : 'flex';
-  });
-}
-
-/* header scroll effect */
-function onScrollHeader(){
-  if(window.scrollY > 48) header.classList.add('scrolled'); else header.classList.remove('scrolled');
-}
-window.addEventListener('scroll', onScrollHeader);
-onScrollHeader();
-
-/* ------------------ background slideshow per section ------------------ */
-const sectionsWithSlides = document.querySelectorAll('section[data-slides]');
-sectionsWithSlides.forEach(sec=>{
-  const slides = sec.dataset.slides.split(',').map(s=>s.trim()).filter(Boolean);
-  if(!slides.length) return;
-  let index = 0;
-  let currentImg = null;
-
-  const appendImage = (src, show=false) => {
-    const img = document.createElement('img');
-    img.src = src;
-    img.className = 'bg-slide' + (show ? ' show' : '');
-    sec.appendChild(img);
-    return img;
-  };
-
-  currentImg = appendImage(slides[0], true);
-
-  if(slides.length > 1){
-    setInterval(()=>{
-      index = (index + 1) % slides.length;
-      const next = appendImage(slides[index], false);
-      // quick fade swap
-      requestAnimationFrame(()=> {
-        next.classList.add('show');
-        if(currentImg) currentImg.classList.remove('show');
-        setTimeout(()=> { if(currentImg && currentImg.parentNode) currentImg.remove(); currentImg = next; }, 1000);
-      });
-    }, 5000);
-  }
-});
-
-/* ------------------ fade-in (observe section-inner) ------------------ */
-const inners = document.querySelectorAll('.section-inner');
-const observer = new IntersectionObserver((entries)=>{
-  entries.forEach(entry=>{
-    if(entry.isIntersecting){
-      entry.target.classList.add('visible');
+  // ヘッダー透明度調整（スクロール方向で変化）
+  let lastScroll=0;
+  const header=document.querySelector('.site-header');
+  window.addEventListener('scroll',()=>{
+    const current=window.scrollY;
+    if(current>lastScroll){ 
+      // 下にスクロール中
+      header.style.background="rgba(0,0,0,0.4)";
+    } else { 
+      // 上にスクロール中
+      header.style.background="rgba(0,0,0,0.9)";
     }
+    lastScroll=current;
   });
-},{threshold: 0.25});
-inners.forEach(i => observer.observe(i));
-
-/* ------------------ smooth sway (Toller-like, rAF) ------------------ */
-const allSections = document.querySelectorAll('section');
-allSections.forEach((s,i)=> s.dataset.idx = i);
-let ticking = false;
-function updateSway(){
-  allSections.forEach(sec=>{
-    const idx = Number(sec.dataset.idx || 0);
-    const rect = sec.getBoundingClientRect();
-    const centerOffset = rect.top + rect.height/2 - window.innerHeight/2;
-    const damp = Math.min(Math.abs(centerOffset)/300, 1); // smaller divisor => stronger snap
-    const offsetY = -centerOffset * (1 - damp) * 0.08; // scale down
-    const sway = Math.sin((window.scrollY + idx*100) / 350) * 4; // gentle sway
-    sec.style.transform = `translateY(${offsetY + sway}px)`;
-  });
-  ticking = false;
-}
-window.addEventListener('scroll', ()=>{
-  if(!ticking){ requestAnimationFrame(updateSway); ticking = true; }
-});
-updateSway();
-
-/* ------------------ Hero arrow click -> scroll to next ------------------ */
-const arrow = document.querySelector('.scroll-down');
-if(arrow){
-  arrow.addEventListener('click', ()=>{
-    const next = document.querySelector('#about');
-    if(next) next.scrollIntoView({behavior:'smooth'});
-  });
-}
 </script>
+
 </body>
 </html>
