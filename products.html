@@ -25,27 +25,13 @@
     .hamburger {display:none;flex-direction:column;gap:5px;cursor:pointer;}
     .hamburger span {width:25px;height:3px;background:#fff;}
 
-    /* ====== セクション共通 ====== */
-    section {
-      width:100%;height:100vh;
-      display:flex;flex-direction:column;
-      justify-content:center;align-items:center;
-      text-align:center;
-      scroll-snap-align:start;
-      overflow:hidden;
-      opacity:0;transform:translateY(40px);
-      transition:opacity .75s ease, transform .75s ease;
-    }
-    section.visible {opacity:1;transform:translateY(0);}
-    section h1, section h2, section p, section a {position:relative;z-index:2;}
-
     /* ====== Hero ====== */
     .hero {
       background:url('images/products-hero.jpg') no-repeat center/cover;
       position:relative;
       height:100vh;
-      opacity:1 !important;
-      transform:none !important;
+      display:flex;align-items:center;justify-content:center;
+      text-align:center;
     }
     .hero::after {
       content:"";position:absolute;top:0;left:0;right:0;bottom:0;
@@ -53,15 +39,14 @@
     }
     .hero-content {
       position:relative;z-index:1;
-      font-size:2.5em;font-weight:bold;
+      font-size:3em;font-weight:bold;
     }
 
     /* ====== Products Section ====== */
     .products-section {
       background:#111;
       padding:100px 20px;
-      opacity:1 !important;
-      transform:none !important;
+      text-align:center;
     }
     .products-section h2 {
       font-size:2.2em;
@@ -80,11 +65,13 @@
       padding:20px;
       border-radius:15px;
       box-shadow:0 4px 10px rgba(0,0,0,0.6);
-      transition:transform 0.3s ease, box-shadow 0.3s ease;
+      opacity:0;
+      transform:translateY(40px);
+      transition:opacity .75s ease, transform .75s ease;
     }
-    .product-card:hover {
-      transform:translateY(-10px);
-      box-shadow:0 8px 20px rgba(0,0,0,0.8);
+    .product-card.visible {
+      opacity:1;
+      transform:translateY(0);
     }
     .product-card img {
       width:100%;border-radius:10px;margin-bottom:15px;
@@ -159,7 +146,7 @@
   </footer>
 
   <script>
-    // ハンバーガー
+    // ハンバーガーメニュー
     const hamburger=document.querySelector('.hamburger');
     const nav=document.querySelector('.main-nav');
     hamburger.addEventListener('click',()=>nav.classList.toggle('open'));
@@ -177,17 +164,16 @@
       lastScrollY=currentY;
     });
 
-    // フェードイン（HeroとProducts見出しは除外）
-    const fadeSections=document.querySelectorAll('.product-card');
+    // フェードイン（Productカードのみ）
+    const cards=document.querySelectorAll('.product-card');
     const observer=new IntersectionObserver(entries=>{
       entries.forEach(entry=>{
         if(entry.isIntersecting){
-          entry.target.style.opacity=1;
-          entry.target.style.transform='translateY(0)';
+          entry.target.classList.add('visible');
         }
       });
     },{threshold:0.2});
-    fadeSections.forEach(sec=>observer.observe(sec));
+    cards.forEach(c=>observer.observe(c));
   </script>
 </body>
 </html>
