@@ -1,296 +1,163 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <title>About Us | WELL-LAB.</title>
-  <style>
-    /* --- リセット・基本 --- */
-    * { margin:0; padding:0; box-sizing:border-box; }
-    html, body { width:100%; height:100%; font-family: 'Helvetica Neue', Arial, sans-serif; scroll-behavior: smooth; }
-    body { color: #333; background-color: #fff; }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>WELL-LAB | About Us</title>
+<style>
+/* reset */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{font-family:"Helvetica Neue",Arial,sans-serif;scroll-behavior:smooth}
+body{background:#07070a;color:#e9eef8;line-height:1.65}
 
-    a { color: inherit; text-decoration: none; }
+/* header (reuse same look) */
+.header01{
+  position:fixed;top:0;left:0;width:100%;z-index:1200;
+  display:flex;align-items:center;justify-content:space-between;padding:12px 24px;
+  background:rgba(0,0,0,0.6);backdrop-filter:blur(8px);transition:background .28s ease, box-shadow .28s ease;
+}
+.header01.scrolled{ background: rgba(0,0,0,0.9); box-shadow:0 6px 30px rgba(0,0,0,.45); }
+.header01-logo img{ height:40px }
+.header01-nav ul{ display:flex; gap:18px; list-style:none; align-items:center }
+.header01-nav a{ color:#dbefff; text-decoration:none; font-weight:600; padding:6px 8px; border-radius:6px }
+.header01-nav a:hover{ color:#fff; background: rgba(255,255,255,0.03) }
 
-    /* --- ヘッダー --- */
-    .header01 {
-      padding: 20px 24px;
-      background-color: #fff;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: sticky;
-      top:0;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      z-index: 1000;
-    }
-    .header01-logo img {
-      width: 200px;
-      height: auto;
-    }
-    .header01-nav ul {
-      list-style: none;
-      display: flex;
-      gap: 24px;
-      font-size: 16px;
-      font-weight: 600;
-    }
-    .header01-nav li a {
-      padding: 8px 12px;
-      transition: color 0.3s, background-color 0.3s;
-    }
-    .header01-nav li a:hover {
-      color: #2c7dce;
-      background-color: rgba(44,125,206,0.1);
-      border-radius: 4px;
-    }
-    .header01-nav li .active {
-      color: #2c7dce;
-    }
+/* hero (dark but bold) */
+.hero{
+  min-height:58vh; height:70vh; display:flex; align-items:center; justify-content:center; text-align:center;
+  background: linear-gradient(180deg, rgba(7,10,20,0.95), rgba(12,16,28,0.8));
+  padding:64px 20px;
+}
+.hero h1{ font-size:clamp(32px,6vw,56px); color:#fff; margin-bottom:12px }
+.hero p{ max-width:720px; color:rgba(235,245,255,0.9) }
 
-    /* --- Hero / ビジョン --- */
-    .hero {
-      position: relative;
-      width:100%;
-      height: 70vh;
-      min-height: 400px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      background: linear-gradient(135deg, #2c7dce, #5aa0f0);
-      color: #fff;
-      overflow: hidden;
-    }
-    .hero h1 {
-      font-size: 48px;
-      margin-bottom: 16px;
-      line-height: 1.2;
-    }
-    .hero p {
-      font-size: 20px;
-      max-width: 600px;
-      opacity: 0.9;
-    }
+/* section base */
+main{ margin-top:2px } /* header covers top  */
+section{ padding:80px 20px; display:flex; gap:40px; align-items:center; flex-wrap:wrap; opacity:0; transform:translateY(40px); transition:all .8s ease; }
+section.visible{ opacity:1; transform:translateY(0) }
 
-    /* --- セクション共通スタイル --- */
-    section {
-      padding: 80px 20px;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 40px;
-      opacity: 0;
-      transform: translateY(40px);
-      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-    }
-    section.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+/* profile sections alternate */
+.profile-section{ background:transparent; border-bottom:1px solid rgba(255,255,255,0.03) }
+.profile-section.reverse{ flex-direction:row-reverse; background:transparent }
+.profile-circle{ flex:0 0 240px; width:240px;height:240px;border-radius:50%;overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,0.45) }
+.profile-circle img{ width:100%;height:100%;object-fit:cover }
+.profile-text{ flex:1; min-width:260px }
+.profile-text h2{ color:#9fd8ff; font-size:28px; margin-bottom:14px }
+.profile-text p{ color:#cfe8ff; font-size:16px }
 
-    /* 活動セクション左右交互配置 */
-    .profile-section {
-      background-color: #f7f9fb;
-    }
-    .profile-section.reverse {
-      flex-direction: row-reverse;
-      background-color: #eef3f8;
-    }
-    .profile-circle {
-      flex: 0 0 250px;
-      width:250px;
-      height:250px;
-      border-radius: 50%;
-      overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-    .profile-circle img {
-      width:100%;
-      height:100%;
-      object-fit: cover;
-    }
-    .profile-text {
-      flex: 1;
-      min-width: 260px;
-    }
-    .profile-text h2 {
-      font-size: 28px;
-      margin-bottom: 16px;
-      color: #2364a5;
-    }
-    .profile-text p {
-      font-size: 18px;
-      line-height: 1.6;
-      color: #444;
-    }
+/* members */
+.members-section{ text-align:center; padding-bottom:100px }
+.members-section h2{ color:#9fd8ff; font-size:30px; margin-bottom:36px }
+.member-card-container{ display:flex; flex-wrap:wrap; gap:32px; justify-content:center }
+.member-card{ width:220px; text-align:center }
+.member-card img{ width:180px;height:180px;border-radius:50%;object-fit:cover; box-shadow:0 10px 30px rgba(0,0,0,0.45) }
+.member-card h3{ color:#d9f1ff; margin-top:12px }
+.member-card p{ color:#bcdaf1; font-size:14px }
 
-    /* メンバー紹介 */
-    .members-section {
-      padding: 80px 20px;
-      text-align: center;
-    }
-    .members-section h2 {
-      font-size: 32px;
-      margin-bottom: 40px;
-      color: #2364a5;
-    }
-    .member-card-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 40px;
-    }
-    .member-card {
-      width: 220px;
-    }
-    .member-card img {
-      width: 200px;
-      height: 200px;
-      border-radius: 50%;
-      object-fit: cover;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      margin-bottom: 16px;
-    }
-    .member-card h3 {
-      font-size: 20px;
-      margin-bottom: 8px;
-      color: #2c7dce;
-    }
-    .member-card p {
-      font-size: 16px;
-      color: #555;
-    }
+/* CTA button (same tooltip style) */
+a.btn{
+  display:inline-block; padding:.7rem 1.6rem; border-radius:28px; background:linear-gradient(90deg,#2c7dce,#5aa0f0); color:#07102a; font-weight:700; text-decoration:none;
+  transition:transform .25s ease, box-shadow .25s ease; position:relative;
+}
+a.btn:hover{ transform:translateY(-6px); box-shadow:0 16px 40px rgba(44,125,206,.18) }
+a.btn::after{ content:attr(data-tooltip); position:absolute; left:50%; transform:translateX(-50%) translateY(6px); bottom:calc(100% + 10px); background:#0b1117; color:#fff; padding:6px 8px; border-radius:8px; opacity:0; transition:all .18s ease }
+a.btn:hover::after{ opacity:1; transform:translateX(-50%) translateY(0) }
 
-    /* フッター */
-    .site-footer {
-      background-color: #2c7dce;
-      color: #fff;
-      text-align: center;
-      padding: 60px 20px;
-    }
-    .site-footer .logo {
-      width: 150px;
-      margin-bottom: 20px;
-    }
-    .site-footer .creator {
-      font-size: 14px;
-      margin-bottom: 12px;
-    }
-    .site-footer .sns-links a {
-      color: #fff;
-      margin: 0 8px;
-      font-size: 14px;
-    }
+/* footer dark & cool */
+.site-footer{ background:linear-gradient(180deg,#000,#071426); color:#cfe8ff; text-align:center; padding:64px 20px; border-top:1px solid rgba(255,255,255,0.03) }
+.site-footer img{ width:140px; filter:brightness(0) invert(1) }
+.site-footer .creator{ color:#9fbfe6; margin-top:14px }
 
-    /* レスポンシブ */
-    @media (max-width: 768px) {
-      .hero h1 { font-size: 32px; }
-      .hero p { font-size: 16px; }
-      .profile-circle, .profile-circle img { width: 180px; height:180px; }
-      .member-card img { width: 160px; height:160px; }
-      .profile-text h2 { font-size: 22px; }
-      .profile-text p, .member-card p { font-size: 14px; }
-    }
-
-  </style>
+/* responsive */
+@media(max-width:820px){
+  .profile-circle{ width:180px;height:180px }
+  .member-card img{ width:140px;height:140px } 
+}
+</style>
 </head>
 <body>
-  <header class="header01">
-    <div class="header01-logo"><img src="images/logo.png" alt="WELL-LAB Logo"></div>
-    <nav class="header01-nav">
-      <ul class="header01-list">
-        <li class="header01-item"><a href="index.html">TOP</a></li>
-        <li class="header01-item"><a href="aboutus.html" class="active">ABOUT US</a></li>
-        <li class="header01-item"><a href="products.html">PRODUCTS</a></li>
-        <li class="header01-item"><a href="NEWS.html">NEWS</a></li>
-        <li class="header01-item"><a href="contact.html">CONTACT</a></li>
-      </ul>
-    </nav>
-  </header>
 
-  <section class="hero">
+<header class="header01" id="headerAbout">
+  <div class="header01-logo"><a href="index.html"><img src="images/logo.png" alt="WELL-LAB Logo"></a></div>
+  <nav class="header01-nav">
+    <ul class="header01-list">
+      <li><a href="index.html">TOP</a></li>
+      <li><a href="aboutus.html" class="active">ABOUT</a></li>
+      <li><a href="products.html">PRODUCTS</a></li>
+      <li><a href="NEWS.html">NEWS</a></li>
+      <li><a href="contact.html">CONTACT</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section class="hero">
+  <div>
     <h1>WELL-LAB.</h1>
-    <p>ひとりひとりに寄り添った研究者を育て、より良い社会へ。</p>
+    <p>個人に寄り添い、新しい医療福祉の仕組みを創る学生コミュニティ — 研究をつなぎ、社会へ届けます。</p>
+  </div>
+</section>
+
+<main>
+  <section class="profile-section" id="whatis">
+    <div class="profile-circle"><img src="images/activity1.jpg" alt=""></div>
+    <div class="profile-text">
+      <h2>What’s WELL-LAB.?<br>私たちは何者か</h2>
+      <p>WELL-LAB.は学生研究者の発掘・支援とヘルスケア領域のプロダクト開発を行う団体です。医療・福祉・テクノロジーをつなぎ、より良い生活を目指します。</p>
+    </div>
   </section>
 
-  <main>
-    <section class="profile-section fade-in" id="whatiswelllab">
-      <div class="profile-circle">
-        <img src="images/slide1.jpg" alt="ワークショップ風景">
-      </div>
-      <div class="profile-text">
-        <h2>What’s WELL-LAB.?<br>私たちは何者か</h2>
-        <p>医療福祉とテクノロジーを融合させ、個人に寄り添う健康管理の仕組みを創ります。差別のない社会、Wellness & Well-being の実現を目指して。</p>
-      </div>
-    </section>
-
-    <section class="profile-section reverse fade-in" id="ourgoal">
-      <div class="profile-circle">
-        <img src="images/activity2.jpg" alt="展示活動">
-      </div>
-      <div class="profile-text">
-        <h2>Our Goal<br>私たちの使命</h2>
-        <p>未来をつくるのは今の一歩。誰もが心身ともに健康に暮らせる社会へ、Well-Lab は未来のための活動を続けます。</p>
-      </div>
-    </section>
-
-    <section class="profile-section fade-in" id="ourwork">
-      <div class="profile-circle">
-        <img src="images/activity3.jpg" alt="研究活動">
-      </div>
-      <div class="profile-text">
-        <h2>Our Work<br>私たちの活動</h2>
-        <p>研究開発、学生コミュニティの構築、発表活動など、多様なアプローチで医療福祉×テクノロジーの未来を切り開いています。</p>
-      </div>
-    </section>
-
-    <section class="members-section fade-in" id="members">
-      <h2>運営メンバー紹介</h2>
-      <div class="member-card-container">
-        <div class="member-card">
-          <img src="images/member1.jpg" alt="ちめけ">
-          <h3>ちめけ</h3>
-          <p>代表 / 帝京平成大学 医学部8年</p>
-        </div>
-        <div class="member-card">
-          <img src="images/member2.jpg" alt="Myuu">
-          <h3>Myuu</h3>
-          <p>Engineer / 岡山先端技術大学院大学 歩行学部11年</p>
-        </div>
-        <div class="member-card">
-          <img src="images/member3.jpg" alt="Hiroto">
-          <h3>Hiroto</h3>
-          <p>Designer / 名古屋工業大学 工学部</p>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <div class="footer-content">
-      <img class="logo" src="images/logo.png" alt="Logo">
-      <p class="creator">© 2025 WELL-LAB.</p>
-      <div class="sns-links">
-        <a href="https://x.com/welllab_2025">X</a>
-        <a href="#">E-mail</a>
-      </div>
+  <section class="profile-section reverse" id="goal">
+    <div class="profile-circle"><img src="images/activity2.jpg" alt=""></div>
+    <div class="profile-text">
+      <h2>Our Goal<br>私たちの使命</h2>
+      <p>「みんなが健康である未来」を掲げ、学内外での発表・共同研究・プロトタイプ制作を通して社会を動かす力を育てます。</p>
     </div>
-  </footer>
+  </section>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const fadeEls = document.querySelectorAll(".fade-in");
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-          }
-        });
-      }, { threshold: 0.3 });
+  <section class="profile-section" id="work">
+    <div class="profile-circle"><img src="images/activity3.jpg" alt=""></div>
+    <div class="profile-text">
+      <h2>Our Work<br>私たちの活動</h2>
+      <p>研究のPR、学生コミュニティの運営、プロダクト開発、産学連携など多方面で活動。多様な視点で課題解決を試みます。</p>
+      <p><a class="btn" href="contact.html" data-tooltip="お問い合わせはこちら">お問い合わせ</a></p>
+    </div>
+  </section>
 
-      fadeEls.forEach(el => observer.observe(el));
-    });
-  </script>
+  <section class="members-section" id="members">
+    <h2>運営メンバー紹介</h2>
+    <div class="member-card-container">
+      <div class="member-card"><img src="images/member1.jpg" alt=""><h3>ちめけ</h3><p>代表 / 帝京平成大学 医学部</p></div>
+      <div class="member-card"><img src="images/member2.jpg" alt=""><h3>Myuu</h3><p>Engineer / 岡山先端</p></div>
+      <div class="member-card"><img src="images/member3.jpg" alt=""><h3>Hiroto</h3><p>Designer / 名古屋工業</p></div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-content">
+    <img class="logo" src="images/logo.png" alt="WELL-LAB">
+    <p class="creator">© 2025 WELL-LAB.</p>
+    <div class="sns-links">
+      <a href="https://x.com/welllab_2025">X</a> ・ <a href="mailto:info@well-lab.jp">E-mail</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* header fade on scroll for about page */
+const headerAbout = document.getElementById('headerAbout');
+window.addEventListener('scroll', ()=>{
+  if(window.scrollY > 48) headerAbout.classList.add('scrolled'); else headerAbout.classList.remove('scrolled');
+});
+
+/* intersection observer for sections */
+const sections = document.querySelectorAll('main section, .hero');
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting) e.target.classList.add('visible');
+  });
+},{ threshold: 0.28 });
+sections.forEach(s=> io.observe(s));
+</script>
 </body>
 </html>
