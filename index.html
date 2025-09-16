@@ -1,75 +1,75 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>WELL-LAB | Home</title>
 <style>
 /* -------- reset & base -------- */
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;font-family:"Helvetica Neue",Arial,sans-serif;scroll-behavior:smooth}
-body{background:#000;color:#fff;overflow-x:hidden}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;scroll-behavior:smooth;font-family:"Helvetica Neue",Arial,sans-serif}
+body{background:#000;color:#fff;overflow-x:hidden;}
 
 /* -------- header -------- */
 .site-header{
   position:fixed;top:0;left:0;width:100%;z-index:1200;
-  display:flex;align-items:center;justify-content:space-between;padding:14px 24px;
-  background:rgba(0,0,0,0.6);backdrop-filter:blur(8px);
-  transition:background .28s ease,box-shadow .28s ease;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1rem 2rem;
+  background: rgba(0,0,0,0.7);backdrop-filter:blur(8px);
+  transition: background .28s ease;
 }
-.site-header.scrolled{ background: rgba(0,0,0,0.92); box-shadow:0 6px 30px rgba(0,0,0,.45); }
-.site-header .logo img{ height:40px; display:block }
+.site-header .logo img{height:40px}
 
 /* nav */
-.main-nav ul{ display:flex; gap:20px; list-style:none; align-items:center }
+.main-nav ul{display:flex;gap:2rem;list-style:none}
 .main-nav a{
-  color:#fff; text-decoration:none; font-weight:600; padding:8px 6px; position:relative;
+  color:#fff;text-decoration:none;font-weight:600;position:relative;padding-bottom:4px;
 }
 .main-nav a::after{
-  content:""; position:absolute; left:0; bottom:-6px; height:3px; width:100%;
+  content:"";position:absolute;bottom:0;left:0;width:100%;height:2px;
   background: linear-gradient(90deg,#2364a5,#2c7dce,#5aa0f0);
-  transform:scaleX(0); transform-origin:left; transition:transform .28s ease;
+  transform: scaleX(0);transform-origin:left;transition:transform .28s ease;
 }
-.main-nav a:hover::after{ transform:scaleX(1); }
+.main-nav a:hover::after{transform: scaleX(1);}
 
-/* hamburger (small screens) */
-.hamburger{ display:none; width:28px; height:20px; flex-direction:column; justify-content:space-between; cursor:pointer }
-.hamburger span{ display:block; height:3px; background:#fff; border-radius:3px }
+/* hamburger */
+.hamburger{display:none;flex-direction:column;justify-content:space-between;width:25px;height:20px;cursor:pointer}
+.hamburger span{display:block;height:3px;width:100%;background:#fff;border-radius:2px}
 
 /* -------- section base -------- */
 section{
-  position:relative; width:100%; min-height:100vh; display:flex; align-items:center; justify-content:center;
-  text-align:center; overflow:hidden;
+  position:relative;width:100%;height:100vh;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+  text-align:center;overflow:hidden;
+  opacity:0;transform:translateY(50px);
+  transition:opacity 1s ease, transform 1s ease;
+  scroll-snap-align:start;
 }
-section[data-slides]::before{
-  content:""; position:absolute; inset:0; background:rgba(0,0,0,0.5); z-index:1;
-}
-.bg-slide{
-  position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0;
-  opacity:0; transition:opacity 1s ease;
-}
-.bg-slide.show{ opacity:1; }
+section.visible{opacity:1;transform:translateY(0);}
 
-.section-inner{
-  position:relative; z-index:2; max-width:1200px; padding:0 24px;
-  opacity:0; transform:translateY(40px); transition:opacity .75s ease, transform .75s ease;
+/* overlay */
+section[data-slides]::before{
+  content:"";position:absolute;inset:0;
+  background: rgba(0,0,0,0.7);z-index:1;
 }
-.section-inner.visible{ opacity:1; transform:translateY(0); }
+
+/* bg-slide */
+.bg-slide{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;
+  opacity:0;transition:opacity 1s ease;
+}
+.bg-slide.show{opacity:1;}
 
 /* text */
-h1{ font-size:clamp(28px,5vw,56px); margin-bottom:12px; letter-spacing:.4px }
-h2{ font-size:clamp(20px,3vw,32px); margin-bottom:12px }
-p{ color:rgba(255,255,255,0.92); line-height:1.6; max-width:900px; margin:0 auto 18px }
+h1{font-size:clamp(28px,5vw,56px);margin-bottom:12px}
+h2{font-size:clamp(20px,3vw,32px);margin-bottom:12px}
+p{color:rgba(255,255,255,0.92);line-height:1.6;max-width:900px;margin:0 auto 18px}
 
-/* call-to-action button */
+/* button hover only */
 a.btn{
-  display:inline-block;
-  padding:.7rem 1.8rem;
-  border-radius:28px;
+  display:inline-block;padding:.7rem 1.8rem;border-radius:28px;
   background:linear-gradient(90deg,#2364a5,#2c7dce,#5aa0f0);
-  color:#fff;
-  font-weight:700;
-  text-decoration:none;
+  color:#fff;font-weight:700;text-decoration:none;
   transition:transform .25s ease, box-shadow .25s ease;
 }
 a.btn:hover{
@@ -77,182 +77,170 @@ a.btn:hover{
   box-shadow:0 16px 40px rgba(44,125,206,.32);
 }
 
-/* hero arrow */
+/* scroll-down arrow */
 .scroll-down{
-  position:absolute; left:50%; bottom:28px; transform:translateX(-50%);
+  position:absolute;left:50%;bottom:28px;transform:translateX(-50%);
   width:0;height:0;border-left:12px solid transparent;border-right:12px solid transparent;border-top:18px solid #fff;
-  z-index:2; cursor:pointer; animation:bounce 1.6s infinite;
+  z-index:2;cursor:pointer;animation:bounce 1.6s infinite;
 }
 @keyframes bounce{
-  0%,20%,50%,80%,100%{ transform:translateX(-50%) translateY(0) } 
-  40%{ transform:translateX(-50%) translateY(10px) } 
-  60%{ transform:translateX(-50%) translateY(6px) }
-}
-
-/* small screens */
-@media(max-width:900px){
-  .main-nav{ display:none; flex-direction:column; background:rgba(0,0,0,0.95); position:absolute; top:100%; left:0; width:100% }
-  .main-nav.open{ display:flex }
-  .hamburger{ display:flex }
+  0%,20%,50%,80%,100%{transform:translateX(-50%) translateY(0)}
+  40%{transform:translateX(-50%) translateY(10px)}
+  60%{transform:translateX(-50%) translateY(6px)}
 }
 
 /* footer */
-.site-footer{
-  background:linear-gradient(180deg,#040406 0%, #071026 100%);
-  color:#dfefff; text-align:center; padding:48px 20px; border-top:1px solid rgba(255,255,255,0.04)
-}
-.site-footer img{ width:120px; filter:brightness(.95) }
-.site-footer p{ margin-top:12px; color:#9fbfe6 }
+.site-footer{background:#000;color:#dfefff;text-align:center;padding:48px 20px;border-top:1px solid rgba(255,255,255,0.04)}
+.site-footer img{width:120px;filter:brightness(.95)}
+.site-footer p{margin-top:12px;color:#9fbfe6}
 
-/* subtle helper */
-.small-muted{ font-size:14px; color:rgba(255,255,255,0.75) }
+/* small screens */
+@media(max-width:900px){
+  .main-nav{display:none;position:absolute;top:100%;left:0;width:100%;background: rgba(0,0,0,0.9);flex-direction:column;}
+  .main-nav ul{flex-direction:column;gap:0;}
+  .main-nav li{border-bottom:1px solid #222;}
+  .main-nav a{padding:1rem;display:block;}
+  .hamburger{display:flex;}
+}
+.main-nav.open{display:flex;}
 </style>
 </head>
 <body>
 
-<header class="site-header" id="siteHeader">
-  <div class="logo"><a href="index.html"><img src="images/logo.png" alt="WELL-LAB Logo"></a></div>
+<header class="site-header">
+  <a href="#" class="logo"><img src="images/logo.png" alt="WELL-LAB Logo"></a>
   <nav class="main-nav">
     <ul>
       <li><a href="#hero">TOP</a></li>
-      <li><a href="aboutus.html">ABOUT</a></li>
+      <li><a href="aboutus.html">ABOUT US</a></li>
       <li><a href="#products">PRODUCTS</a></li>
       <li><a href="#news">NEWS</a></li>
       <li><a href="#contact">CONTACT</a></li>
     </ul>
   </nav>
-  <div class="hamburger" id="hamburger" aria-hidden="true">
+  <div class="hamburger">
     <span></span><span></span><span></span>
   </div>
 </header>
 
 <section id="hero" data-slides="images/slide1.jpg,images/slide2.jpg,images/slide3.jpg">
-  <div class="section-inner">
-    <h1>WELL-LAB.</h1>
-    <p>ひとりひとりに寄り添った研究をする次世代学生集団 — 個別化された医療福祉システムを創ります。</p>
-    <a class="btn" href="aboutus.html">Learn More</a>
-  </div>
-  <div class="scroll-down" aria-hidden="true" title="スクロール"></div>
+  <h1>WELL-LAB.</h1>
+  <p>ひとりひとりに寄り添った研究をする次世代学生集団</p>
+  <div class="scroll-down"></div>
 </section>
 
-<section id="about" data-slides="images/about1.jpg,images/about2.jpg">
-  <div class="section-inner">
-    <h2>What is WELL-LAB.?</h2>
-    <p>ヘルスケア×テクノロジーをつなぎ、誰もが生きやすい社会を目指す学生コミュニティ。研究の発掘・発信・共創を行います。</p>
-    <a class="btn" href="aboutus.html">See More</a>
-  </div>
+<section id="about" data-slides="images/about1.jpg,images/about2.jpg,images/about3.jpg">
+  <h2>What is WELL-LAB.?</h2>
+  <p>ヘルスケアや健康管理に関するシステムを開発する学生集団</p>
+  <a href="aboutus.html" class="btn">Learn More</a>
 </section>
 
-<section id="products" data-slides="images/prod1.jpg,images/prod2.jpg">
-  <div class="section-inner">
-    <h2>Products</h2>
-    <p>構想中のプロダクトやメンバーが作ったツールを紹介します。個人に寄り添うデザインが特徴です。</p>
-    <a class="btn" href="products.html">Learn More</a>
-  </div>
+<section id="products" data-slides="images/prod1.jpg,images/prod2.png,images/prod3.png">
+  <h2>Products</h2>
+  <p>メンバーが作成した個人に寄り添った製品を紹介します</p>
+  <a href="products.html" class="btn">Learn More</a>
 </section>
 
-<section id="news" data-slides="images/news1.jpg,images/news2.jpg">
-  <div class="section-inner">
-    <h2>NEWS</h2>
-    <p>活動やイベント情報、お知らせを掲載しています。</p>
-    <a class="btn" href="NEWS.html">See More</a>
-  </div>
+<section id="news" data-slides="images/news1.jpg,images/news2.jpg,images/news3.jpg">
+  <h2>NEWS</h2>
+  <p>メンバーの主な活動情報やお知らせを掲載</p>
+  <a href="NEWS.html" class="btn">See More</a>
 </section>
 
 <section id="contact">
-  <div class="section-inner">
-    <h2>Contact</h2>
-    <p class="small-muted">お問い合わせはこちら — メールやSNSでご連絡ください。</p>
-  </div>
+  <h2>Contact</h2>
+  <p>お問い合わせはこちらから</p>
 </section>
 
 <footer class="site-footer">
-  <img src="images/logo.png" alt="WELL-LAB" />
-  <p>© 2025 WELL-LAB. / <span class="small-muted">Students for better wellness</span></p>
+  <img src="images/logo.png" alt="Logo">
+  <p>© 2025 WELL-LAB.</p>
 </footer>
 
 <script>
-/* ---------------- hamburger ---------------- */
-const hamburger = document.getElementById('hamburger');
+// hamburger toggle
+const hamburger = document.querySelector('.hamburger');
 const nav = document.querySelector('.main-nav');
-hamburger.addEventListener('click', ()=> nav.classList.toggle('open'));
+hamburger.addEventListener('click', ()=>nav.classList.toggle('open'));
 
-/* ---------------- header scroll effect ---------------- */
+// IntersectionObserver for fade-in
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){entry.target.classList.add("visible");}
+  });
+},{threshold:0.3});
+document.querySelectorAll("section").forEach(sec=>observer.observe(sec));
+
+// header scroll - direction sensitive
 let lastScroll = 0;
-const header = document.getElementById('siteHeader');
-window.addEventListener('scroll', ()=>{
+const header = document.querySelector('.site-header');
+window.addEventListener('scroll',()=>{
   const current = window.scrollY;
-  header.style.background = current > lastScroll ? "rgba(0,0,0,0.4)" : "rgba(0,0,0,0.92)";
+  if(current>lastScroll){
+    header.style.background='rgba(0,0,0,0.4)'; // 下スクロール
+  } else {
+    header.style.background='rgba(0,0,0,0.95)'; // 上スクロール
+  }
   lastScroll = current;
 });
 
-/* ---------------- fade-in ---------------- */
-const inners = document.querySelectorAll('.section-inner');
-const observer = new IntersectionObserver(entries=>{
-  entries.forEach(entry=>{
-    if(entry.isIntersecting) entry.target.classList.add('visible');
-  });
-},{threshold:0.25});
-inners.forEach(i=>observer.observe(i));
+// background slideshow per section
+document.querySelectorAll('section[data-slides]').forEach(sec=>{
+  const slides = sec.dataset.slides.split(',').map(s=>s.trim());
+  let index=0;
+  let currentImg=null;
 
-/* ---------------- Toller sway effect ---------------- */
-const sections = document.querySelectorAll('section');
-sections.forEach((s,i)=> s.dataset.idx = i);
-let ticking = false;
+  const first = document.createElement('img');
+  first.src=slides[0];
+  first.className='bg-slide show';
+  sec.appendChild(first);
+  currentImg=first;
+
+  if(slides.length>1){
+    setInterval(()=>{
+      index=(index+1)%slides.length;
+      const next = document.createElement('img');
+      next.src=slides[index];
+      next.className='bg-slide';
+      sec.appendChild(next);
+      requestAnimationFrame(()=>{
+        next.classList.add('show');
+        currentImg.classList.remove('show');
+        setTimeout(()=>{currentImg.remove(); currentImg=next;},1000);
+      });
+    },5000);
+  }
+});
+
+// Toller風上下スワイ
+const allSections = document.querySelectorAll('section');
+allSections.forEach((sec,i)=>sec.dataset.index=i);
+let ticking=false;
 function updateSway(){
-  sections.forEach(sec=>{
-    const idx = Number(sec.dataset.idx);
+  allSections.forEach(sec=>{
+    const idx = parseInt(sec.dataset.index);
     const rect = sec.getBoundingClientRect();
     const centerOffset = rect.top + rect.height/2 - window.innerHeight/2;
-    const damp = Math.min(Math.abs(centerOffset)/300,1);
-    const offsetY = -centerOffset*(1-damp)*0.08;
-    const sway = Math.sin((window.scrollY + idx*100)/350)*4;
+    const damp = Math.min(Math.abs(centerOffset)/200,1);
+    const offsetY = -centerOffset*(1-damp);
+    const sway = Math.sin(window.scrollY/200 + idx*0.5)*5;
     sec.style.transform = `translateY(${offsetY + sway}px)`;
   });
   ticking=false;
 }
 window.addEventListener('scroll',()=>{
-  if(!ticking){ requestAnimationFrame(updateSway); ticking=true; }
+  if(!ticking){requestAnimationFrame(updateSway);ticking=true;}
 });
 updateSway();
 
-/* ---------------- scroll-down arrow ---------------- */
-document.querySelectorAll('.scroll-down').forEach(el=>{
-  el.addEventListener('click', ()=>{
-    const next = el.closest('section').nextElementSibling;
+// scroll-down arrow click
+document.querySelectorAll('.scroll-down').forEach(arrow=>{
+  arrow.addEventListener('click',()=>{
+    const next = arrow.closest('section').nextElementSibling;
     if(next) next.scrollIntoView({behavior:'smooth'});
   });
 });
-
-/* ---------------- slideshow ---------------- */
-sections.forEach(sec=>{
-  const slidesAttr = sec.dataset.slides;
-  if(!slidesAttr) return;
-  const slides = slidesAttr.split(',').map(s=>s.trim()).filter(Boolean);
-  if(!slides.length) return;
-
-  let index = 0, currentImg=null;
-  const appendImage = (src,show=false)=>{
-    const img=document.createElement('img');
-    img.src=src;
-    img.className='bg-slide'+(show?' show':'');
-    sec.appendChild(img);
-    return img;
-  };
-  currentImg = appendImage(slides[0],true);
-
-  if(slides.length>1){
-    setInterval(()=>{
-      index=(index+1)%slides.length;
-      const next=appendImage(slides[index],false);
-      requestAnimationFrame(()=>{
-        next.classList.add('show');
-        if(currentImg) currentImg.classList.remove('show');
-        setTimeout(()=>{ if(currentImg?.parentNode) currentImg.remove(); currentImg=next },1000);
-      });
-    },5000);
-  }
-});
 </script>
+
 </body>
 </html>
