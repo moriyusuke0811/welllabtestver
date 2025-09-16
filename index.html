@@ -6,237 +6,217 @@
 <title>WELL-LAB | Home</title>
 <style>
 /* -------- reset & base -------- */
-*{margin:0;padding:0;box-sizing:border-box}
-html,body{height:100%;scroll-behavior:smooth;font-family:"Helvetica Neue",Arial,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;scroll-behavior:smooth;font-family:"Helvetica Neue",Arial,sans-serif;}
 body{background:#000;color:#fff;overflow-x:hidden;}
 
 /* -------- header -------- */
 .site-header{
   position:fixed;top:0;left:0;width:100%;z-index:1200;
   display:flex;align-items:center;justify-content:space-between;
-  padding:1rem 2rem;
-  background: rgba(0,0,0,0.7);backdrop-filter:blur(8px);
-  transition: background .28s ease;
+  padding:14px 24px;
+  background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);
+  transition:background .28s ease, box-shadow .28s ease;
 }
-.site-header .logo img{height:40px}
-
-/* nav */
-.main-nav ul{display:flex;gap:2rem;list-style:none}
+.site-header.scrolled{background:rgba(0,0,0,0.95);}
+.site-header .logo img{height:40px;}
+.main-nav ul{display:flex;gap:20px;list-style:none;align-items:center;}
 .main-nav a{
-  color:#fff;text-decoration:none;font-weight:600;position:relative;padding-bottom:4px;
+  color:#fff;text-decoration:none;font-weight:600;position:relative;padding:8px 6px;
 }
 .main-nav a::after{
-  content:"";position:absolute;bottom:0;left:0;width:100%;height:2px;
-  background: linear-gradient(90deg,#2364a5,#2c7dce,#5aa0f0);
-  transform: scaleX(0);transform-origin:left;transition:transform .28s ease;
+  content:"";position:absolute;left:0;bottom:0;height:2px;width:100%;
+  background:linear-gradient(90deg,#2364a5,#2c7dce,#5aa0f0);
+  transform:scaleX(0);transform-origin:left;transition:transform .28s ease;
 }
-.main-nav a:hover::after{transform: scaleX(1);}
+.main-nav a:hover::after{transform:scaleX(1);}
 
 /* hamburger */
-.hamburger{display:none;flex-direction:column;justify-content:space-between;width:25px;height:20px;cursor:pointer}
-.hamburger span{display:block;height:3px;width:100%;background:#fff;border-radius:2px}
+.hamburger{display:none;width:28px;height:20px;flex-direction:column;justify-content:space-between;cursor:pointer;}
+.hamburger span{display:block;height:3px;background:#fff;border-radius:3px;}
 
-/* -------- section base -------- */
+/* -------- section -------- */
 section{
   position:relative;width:100%;height:100vh;
-  display:flex;flex-direction:column;justify-content:center;align-items:center;
-  text-align:center;overflow:hidden;
-  opacity:0;transform:translateY(50px);
-  transition:opacity 1s ease, transform 1s ease;
-  scroll-snap-align:start;
+  display:flex;align-items:center;justify-content:center;
+  text-align:center;overflow:hidden;scroll-snap-align:start;
+  opacity:0;transform:translateY(40px);transition:opacity .75s ease, transform .75s ease;
 }
 section.visible{opacity:1;transform:translateY(0);}
 
-/* overlay */
+/* background container & slides */
+section .bg-container{position:absolute;inset:0;z-index:0;overflow:hidden;}
+section img.bg-slide{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1s ease;}
+section img.bg-slide.show{opacity:1;}
 section[data-slides]::before{
-  content:"";position:absolute;inset:0;
-  background: rgba(0,0,0,0.7);z-index:1;
+  content:"";position:absolute;inset:0;background:rgba(0,0,0,0.6);z-index:1;
 }
 
-/* bg-slide */
-.bg-slide{
-  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;
-  opacity:0;transition:opacity 1s ease;
-}
-.bg-slide.show{opacity:1;}
-
-/* text */
-h1{font-size:clamp(28px,5vw,56px);margin-bottom:12px}
-h2{font-size:clamp(20px,3vw,32px);margin-bottom:12px}
-p{color:rgba(255,255,255,0.92);line-height:1.6;max-width:900px;margin:0 auto 18px}
-
-/* button hover only */
+/* text & scroll arrow */
+section h1,section h2,section p,section a,.scroll-down{position:relative;z-index:2;}
+h1{font-size:clamp(28px,5vw,56px);margin-bottom:12px;}
+h2{font-size:clamp(20px,3vw,32px);margin-bottom:12px;}
+p{color:rgba(255,255,255,0.92);line-height:1.6;max-width:900px;margin:0 auto 18px;}
 a.btn{
   display:inline-block;padding:.7rem 1.8rem;border-radius:28px;
   background:linear-gradient(90deg,#2364a5,#2c7dce,#5aa0f0);
   color:#fff;font-weight:700;text-decoration:none;
-  transition:transform .25s ease, box-shadow .25s ease;
+  transition:transform .25s ease,box-shadow .25s ease;
 }
-a.btn:hover{
-  transform:translateY(-6px);
-  box-shadow:0 16px 40px rgba(44,125,206,.32);
-}
+a.btn:hover{transform:translateY(-6px);box-shadow:0 16px 40px rgba(44,125,206,.32);}
 
-/* scroll-down arrow */
 .scroll-down{
   position:absolute;left:50%;bottom:28px;transform:translateX(-50%);
-  width:0;height:0;border-left:12px solid transparent;border-right:12px solid transparent;border-top:18px solid #fff;
-  z-index:2;cursor:pointer;animation:bounce 1.6s infinite;
+  width:0;height:0;border-left:12px solid transparent;border-right:12px solid transparent;
+  border-top:18px solid #fff;animation:bounce 1.6s infinite;z-index:2;cursor:pointer;
 }
 @keyframes bounce{
-  0%,20%,50%,80%,100%{transform:translateX(-50%) translateY(0)}
-  40%{transform:translateX(-50%) translateY(10px)}
-  60%{transform:translateX(-50%) translateY(6px)}
+  0%,20%,50%,80%,100%{transform:translateX(-50%) translateY(0);}
+  40%{transform:translateX(-50%) translateY(10px);}
+  60%{transform:translateX(-50%) translateY(6px);}
 }
 
-/* footer */
-.site-footer{background:#000;color:#dfefff;text-align:center;padding:48px 20px;border-top:1px solid rgba(255,255,255,0.04)}
-.site-footer img{width:120px;filter:brightness(.95)}
-.site-footer p{margin-top:12px;color:#9fbfe6}
+/* -------- footer -------- */
+.site-footer{background:linear-gradient(180deg,#040406 0%,#071026 100%);color:#dfefff;text-align:center;padding:48px 20px;border-top:1px solid rgba(255,255,255,0.04);}
+.site-footer img{width:120px;filter:brightness(.95);}
+.site-footer p{margin-top:12px;color:#9fbfe6;}
 
 /* small screens */
 @media(max-width:900px){
-  .main-nav{display:none;position:absolute;top:100%;left:0;width:100%;background: rgba(0,0,0,0.9);flex-direction:column;}
-  .main-nav ul{flex-direction:column;gap:0;}
-  .main-nav li{border-bottom:1px solid #222;}
-  .main-nav a{padding:1rem;display:block;}
+  .main-nav{display:none;}
   .hamburger{display:flex;}
+  .main-nav.open{display:flex;flex-direction:column;background:rgba(0,0,0,0.95);position:absolute;top:100%;left:0;width:100%;}
+  .main-nav ul{flex-direction:column;}
 }
-.main-nav.open{display:flex;}
 </style>
 </head>
 <body>
 
-<header class="site-header">
-  <a href="#" class="logo"><img src="images/logo.png" alt="WELL-LAB Logo"></a>
+<header class="site-header" id="siteHeader">
+  <div class="logo"><a href="index.html"><img src="images/logo.png" alt="WELL-LAB Logo"></a></div>
   <nav class="main-nav">
     <ul>
       <li><a href="#hero">TOP</a></li>
-      <li><a href="aboutus.html">ABOUT US</a></li>
+      <li><a href="aboutus.html">ABOUT</a></li>
       <li><a href="#products">PRODUCTS</a></li>
       <li><a href="#news">NEWS</a></li>
       <li><a href="#contact">CONTACT</a></li>
     </ul>
   </nav>
-  <div class="hamburger">
+  <div class="hamburger" id="hamburger">
     <span></span><span></span><span></span>
   </div>
 </header>
 
+<!-- HERO -->
 <section id="hero" data-slides="images/slide1.jpg,images/slide2.jpg,images/slide3.jpg">
   <h1>WELL-LAB.</h1>
   <p>ひとりひとりに寄り添った研究をする次世代学生集団</p>
-  <div class="scroll-down"></div>
+  <div class="scroll-down" title="スクロール"></div>
 </section>
 
+<!-- ABOUT -->
 <section id="about" data-slides="images/about1.jpg,images/about2.jpg,images/about3.jpg">
   <h2>What is WELL-LAB.?</h2>
-  <p>ヘルスケアや健康管理に関するシステムを開発する学生集団</p>
+  <p>ヘルスケアや健康管理に関するシステムを開発する学生集団。ノーマライゼーションな社会を創出します。</p>
   <a href="aboutus.html" class="btn">Learn More</a>
 </section>
 
+<!-- PRODUCTS -->
 <section id="products" data-slides="images/prod1.jpg,images/prod2.png,images/prod3.png">
   <h2>Products</h2>
-  <p>メンバーが作成した個人に寄り添った製品を紹介します</p>
+  <p>メンバーが作成した個人個人に寄り添った様々なシステムや製品を紹介します。</p>
   <a href="products.html" class="btn">Learn More</a>
 </section>
 
+<!-- NEWS -->
 <section id="news" data-slides="images/news1.jpg,images/news2.jpg,images/news3.jpg">
   <h2>NEWS</h2>
-  <p>メンバーの主な活動情報やお知らせを掲載</p>
+  <p>メンバーの活動情報やお知らせを掲載しています。</p>
   <a href="NEWS.html" class="btn">See More</a>
 </section>
 
+<!-- CONTACT -->
 <section id="contact">
   <h2>Contact</h2>
-  <p>お問い合わせはこちらから</p>
+  <p>お問い合わせはこちら</p>
 </section>
 
 <footer class="site-footer">
-  <img src="images/logo.png" alt="Logo">
+  <img src="images/logo.png" alt="WELL-LAB">
   <p>© 2025 WELL-LAB.</p>
 </footer>
 
 <script>
-// hamburger toggle
-const hamburger = document.querySelector('.hamburger');
-const nav = document.querySelector('.main-nav');
-hamburger.addEventListener('click', ()=>nav.classList.toggle('open'));
+// ハンバーガー
+const hamburger=document.getElementById('hamburger');
+const nav=document.querySelector('.main-nav');
+hamburger.addEventListener('click',()=>nav.classList.toggle('open'));
 
-// IntersectionObserver for fade-in
-const observer = new IntersectionObserver((entries)=>{
-  entries.forEach(entry=>{
-    if(entry.isIntersecting){entry.target.classList.add("visible");}
-  });
+// IntersectionObserverでfade-in
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});
 },{threshold:0.3});
-document.querySelectorAll("section").forEach(sec=>observer.observe(sec));
+document.querySelectorAll('section').forEach(sec=>observer.observe(sec));
 
-// header scroll - direction sensitive
-let lastScroll = 0;
-const header = document.querySelector('.site-header');
+// ヘッダー背景変化
+const header=document.getElementById('siteHeader');
+let lastScroll=0;
 window.addEventListener('scroll',()=>{
-  const current = window.scrollY;
-  if(current>lastScroll){
-    header.style.background='rgba(0,0,0,0.4)'; // 下スクロール
-  } else {
-    header.style.background='rgba(0,0,0,0.95)'; // 上スクロール
-  }
-  lastScroll = current;
+  const st=window.scrollY;
+  if(st>lastScroll){ header.style.background='rgba(0,0,0,0.7)'; }
+  else{ header.style.background='rgba(0,0,0,0.95)'; }
+  lastScroll=st;
 });
 
-// background slideshow per section
+// 背景スライドショー
 document.querySelectorAll('section[data-slides]').forEach(sec=>{
-  const slides = sec.dataset.slides.split(',').map(s=>s.trim());
+  const slides=sec.dataset.slides.split(',').map(s=>s.trim());
   let index=0;
   let currentImg=null;
 
-  const first = document.createElement('img');
-  first.src=slides[0];
-  first.className='bg-slide show';
-  sec.appendChild(first);
+  let container=sec.querySelector('.bg-container');
+  if(!container){ container=document.createElement('div'); container.className='bg-container'; sec.appendChild(container); }
+
+  const first=document.createElement('img');
+  first.src=slides[0]; first.className='bg-slide show'; container.appendChild(first);
   currentImg=first;
 
   if(slides.length>1){
     setInterval(()=>{
       index=(index+1)%slides.length;
-      const next = document.createElement('img');
-      next.src=slides[index];
-      next.className='bg-slide';
-      sec.appendChild(next);
+      const next=document.createElement('img'); next.src=slides[index]; next.className='bg-slide';
+      container.appendChild(next);
       requestAnimationFrame(()=>{
-        next.classList.add('show');
-        currentImg.classList.remove('show');
+        next.classList.add('show'); currentImg.classList.remove('show');
         setTimeout(()=>{currentImg.remove(); currentImg=next;},1000);
       });
     },5000);
   }
 });
 
-// Toller風上下スワイ
-const allSections = document.querySelectorAll('section');
-allSections.forEach((sec,i)=>sec.dataset.index=i);
+// Toller風スクロール
+const allSections=document.querySelectorAll('section');
+allSections.forEach((s,i)=>s.dataset.index=i);
 let ticking=false;
-function updateSway(){
+function updateSections(){
   allSections.forEach(sec=>{
-    const idx = parseInt(sec.dataset.index);
-    const rect = sec.getBoundingClientRect();
-    const centerOffset = rect.top + rect.height/2 - window.innerHeight/2;
-    const damp = Math.min(Math.abs(centerOffset)/200,1);
-    const offsetY = -centerOffset*(1-damp);
-    const sway = Math.sin(window.scrollY/200 + idx*0.5)*5;
-    sec.style.transform = `translateY(${offsetY + sway}px)`;
+    const rect=sec.getBoundingClientRect();
+    const centerOffset=rect.top+rect.height/2-window.innerHeight/2;
+    const damp=Math.min(Math.abs(centerOffset)/200,1);
+    const offsetY=-centerOffset*(1-damp);
+    const sway=Math.sin(window.scrollY/200+parseInt(sec.dataset.index)*0.5)*5;
+    sec.style.transform=`translateY(${offsetY+sway}px)`;
   });
   ticking=false;
 }
-window.addEventListener('scroll',()=>{
-  if(!ticking){requestAnimationFrame(updateSway);ticking=true;}
-});
-updateSway();
+window.addEventListener('scroll',()=>{if(!ticking){requestAnimationFrame(updateSections);ticking=true;}});
+updateSections();
 
-// scroll-down arrow click
+// スクロールダウン矢印クリック
 document.querySelectorAll('.scroll-down').forEach(arrow=>{
   arrow.addEventListener('click',()=>{
-    const next = arrow.closest('section').nextElementSibling;
+    const next=arrow.closest('section').nextElementSibling;
     if(next) next.scrollIntoView({behavior:'smooth'});
   });
 });
