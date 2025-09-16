@@ -9,7 +9,7 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 html,body{height:100%;font-family:sans-serif;scroll-behavior:smooth;background:#07070a;color:#e9eef8;}
 
-/* --- ヘッダー --- */
+/* --- ヘッダー (index.htmlと同じ) --- */
 .site-header {
   position:fixed; top:0; left:0; width:100%;
   background: rgba(0,0,0,0.1); backdrop-filter:blur(8px);
@@ -38,29 +38,29 @@ html,body{height:100%;font-family:sans-serif;scroll-behavior:smooth;background:#
 }
 .main-nav.open { display:flex; }
 
-/* --- About Us タイトル&hero --- */
+/* --- About Us タイトル --- */
 .about-title {
   height:15vh;
   display:flex; justify-content:center; align-items:center;
   font-size:clamp(36px,6vw,60px);
   color:#fff; text-align:center;
   opacity:0; transform:translateY(40px); transition:all .8s ease;
-  margin-top:64px; /* ヘッダーと被らない */
+  position: relative;
+  z-index:3;
 }
 
+/* --- Hero セクション --- */
 .hero {
-  height: calc(100vh - 15vh - 64px);
-  display:flex; align-items:center; justify-content:center;
-  text-align:center; position:relative;
+  height:85vh;
+  display:flex; align-items:center; justify-content:center; text-align:center;
+  position:relative;
   background: url('images/slide1.jpg') center center / cover no-repeat;
 }
-
 .hero::before {
   content:""; position:absolute; inset:0;
-  background: rgba(0,0,0,0.3); /* 少し薄めに */
+  background: rgba(0,0,0,0.35); /* 薄めのオーバーレイ */
   z-index:1;
 }
-
 .hero-content {
   position:relative;
   z-index:2;
@@ -68,7 +68,6 @@ html,body{height:100%;font-family:sans-serif;scroll-behavior:smooth;background:#
   transform:translateY(40px);
   transition:all .8s ease;
 }
-
 .hero-content h1 {
   font-size:clamp(48px,8vw,80px); color:#fff; margin-bottom:12px;
 }
@@ -76,13 +75,12 @@ html,body{height:100%;font-family:sans-serif;scroll-behavior:smooth;background:#
   max-width:720px; color:rgba(235,245,255,0.9); margin:0 auto;
 }
 
-
-/* --- section base --- */
+/* --- メインセクション --- */
 main{ margin-top:2px; }
 section{ padding:80px 20px; display:flex; gap:40px; align-items:center; flex-wrap:wrap; opacity:0; transform:translateY(40px); transition:all .8s ease; }
 section.visible, .about-title.visible, .hero-content.visible{ opacity:1; transform:translateY(0) }
 
-/* --- profile sections --- */
+/* --- プロフィール --- */
 .profile-section{ background:transparent; border-bottom:1px solid rgba(255,255,255,0.03); }
 .profile-section.reverse{ flex-direction:row-reverse; }
 .profile-circle{ flex:0 0 240px; width:240px;height:240px;border-radius:50%;overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,0.45); }
@@ -91,7 +89,7 @@ section.visible, .about-title.visible, .hero-content.visible{ opacity:1; transfo
 .profile-text h2{ color:#9fd8ff; font-size:28px; margin-bottom:14px; }
 .profile-text p{ color:#cfe8ff; font-size:16px; }
 
-/* --- members --- */
+/* --- メンバー --- */
 .members-section{ text-align:center; padding-bottom:100px; }
 .members-section h2{ color:#9fd8ff; font-size:30px; margin-bottom:36px; }
 .member-card-container{ display:flex; flex-wrap:wrap; gap:32px; justify-content:center; }
@@ -100,11 +98,11 @@ section.visible, .about-title.visible, .hero-content.visible{ opacity:1; transfo
 .member-card h3{ color:#d9f1ff; margin-top:12px; }
 .member-card p{ color:#bcdaf1; font-size:14px; }
 
-/* --- CTA button --- */
+/* --- CTAボタン --- */
 a.btn{ display:inline-block; padding:.7rem 1.6rem; border-radius:28px; background:linear-gradient(90deg,#2c7dce,#5aa0f0); color:#07102a; font-weight:700; text-decoration:none; transition:transform .25s ease, box-shadow .25s ease; }
 a.btn:hover{ transform:translateY(-6px); box-shadow:0 16px 40px rgba(44,125,206,.18); }
 
-/* --- footer --- */
+/* --- フッター --- */
 .site-footer{ background:linear-gradient(180deg,#000,#071426); color:#cfe8ff; text-align:center; padding:64px 20px; border-top:1px solid rgba(255,255,255,0.03); }
 .site-footer img{ width:140px; filter:brightness(0) invert(1); }
 .site-footer .creator{ color:#9fbfe6; margin-top:14px; }
@@ -147,7 +145,7 @@ a.btn:hover{ transform:translateY(-6px); box-shadow:0 16px 40px rgba(44,125,206,
 </section>
 
 <main>
-  <!-- profile sections -->
+  <!-- プロフィール -->
   <section class="profile-section" id="whatis">
     <div class="profile-circle"><img src="images/activity1.jpg" alt=""></div>
     <div class="profile-text">
@@ -173,6 +171,7 @@ a.btn:hover{ transform:translateY(-6px); box-shadow:0 16px 40px rgba(44,125,206,
     </div>
   </section>
 
+  <!-- メンバー紹介 -->
   <section class="members-section" id="members">
     <h2>運営メンバー紹介</h2>
     <div class="member-card-container">
