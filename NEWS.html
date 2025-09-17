@@ -184,6 +184,23 @@ loadNewsFromGAS(
   "https://script.google.com/macros/s/AKfycbxzRHqAHHTxrYXt3c7C8teMKhMne-TMLt8mfovMXHdS28IeUtpkOoxRTmhgXuU9MaJD/exec",
   "all-news-list"
 );
+function formatDate(isoString) {
+  const date = new Date(isoString);
+  const y = date.getFullYear();
+  const m = date.getMonth() + 1; // 月は0始まり
+  const d = date.getDate();
+  const h = date.getHours();
+  const min = date.getMinutes().toString().padStart(2,'0'); // 0埋め
+  return `${y}年${m}月${d}日 ${h}:${min}`;
+}
+
+// 使用例
+items.forEach(item => {
+  const li = document.createElement("li");
+  li.innerHTML = `<span class="date">${formatDate(item['日付'])}</span> <a href="${item['リンク']}" target="_blank">${item['タイトル']}</a>`;
+  container.appendChild(li);
+});
+
 </script>
 
 </body>
