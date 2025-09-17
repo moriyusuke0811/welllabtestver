@@ -163,15 +163,27 @@ window.addEventListener('scroll', ()=>{
   lastScrollY = currentY;
 });
 
+// 日付フォーマット関数
+function formatDate(isoString) {
+  const date = new Date(isoString);
+  const y = date.getFullYear();
+  const m = date.getMonth() + 1;
+  const d = date.getDate();
+  const h = date.getHours();
+  const min = date.getMinutes().toString().padStart(2,'0');
+  return `${y}年${m}月${d}日 ${h}:${min}`;
+}
+
 // ✅ GASからニュースを取得して表示
 async function loadNewsFromGAS(url, listId) {
   try {
     const res = await fetch(url);
     const items = await res.json();
     const container = document.getElementById(listId);
+
     items.forEach(item => {
       const li = document.createElement("li");
-      li.innerHTML = `<a href="${item['リンク']}" target="_blank"><span class="date">${item['日付']}</span> <span class="title">${item['タイトル']}</span></a>`;
+      li.innerHTML = `<span class="date">${formatDate(item['日付'])}</span> <a href="${item['リンク']}" target="_blank">${item['タイトル']}</a>`;
       container.appendChild(li);
     });
   } catch (error) {
@@ -184,22 +196,6 @@ loadNewsFromGAS(
   "https://script.google.com/macros/s/AKfycbxzRHqAHHTxrYXt3c7C8teMKhMne-TMLt8mfovMXHdS28IeUtpkOoxRTmhgXuU9MaJD/exec",
   "all-news-list"
 );
-function formatDate(isoString) {
-  const date = new Date(isoString);
-  const y = date.getFullYear();
-  const m = date.getMonth() + 1; // 月は0始まり
-  const d = date.getDate();
-  const h = date.getHours();
-  const min = date.getMinutes().toString().padStart(2,'0'); // 0埋め
-  return `${y}年${m}月${d}日 ${h}:${min}`;
-}
-
-// 使用例
-items.forEach(item => {
-  const li = document.createElement("li");
-  li.innerHTML = `<span class="date">${formatDate(item['日付'])}</span> <a href="${item['リンク']}" target="_blank">${item['タイトル']}</a>`;
-  container.appendChild(li);
-});
 
 </script>
 
