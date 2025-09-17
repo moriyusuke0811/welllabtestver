@@ -1,196 +1,190 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NEWS | WELL-LAB.</title>
-  <style>
-    /* === 共通ヘッダー === */
-    body, html {
-      margin: 0;
-      padding: 0;
-      font-family: "Helvetica Neue", Arial, sans-serif;
-      background: #000;
-      color: #fff;
-    }
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      padding: 15px 30px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(0, 0, 0, 0.7);
-      transition: background 0.3s ease;
-      z-index: 1000;
-    }
-    header .logo {
-      font-size: 20px;
-      font-weight: bold;
-      color: #fff;
-    }
-    nav ul {
-      display: flex;
-      list-style: none;
-      gap: 20px;
-      margin: 0;
-      padding: 0;
-    }
-    nav ul li a {
-      text-decoration: none;
-      color: #fff;
-      position: relative;
-      padding: 5px 0;
-      transition: transform 0.2s ease;
-    }
-    nav ul li a:hover {
-      transform: translateY(-2px);
-    }
-    nav ul li a::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: -3px;
-      width: 100%;
-      height: 2px;
-      background: linear-gradient(to right, #2c7dce, #5aa0f0);
-      transform: scaleX(0);
-      transform-origin: right;
-      transition: transform 0.3s ease;
-    }
-    nav ul li a:hover::after {
-      transform: scaleX(1);
-      transform-origin: left;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WELL-LAB | NEWS</title>
+<style>
+/* === 基本リセット === */
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { font-family:sans-serif; scroll-behavior:smooth; background:#07070a; color:#e9eef8; }
+a { text-decoration:none; color:inherit; }
 
-    /* === NEWSセクション === */
-    .news-section {
-      padding: 120px 20px 60px;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-    .news-section h2 {
-      text-align: center;
-      font-size: 2.2rem;
-      margin-bottom: 40px;
-      color: #fff;
-    }
-    .news-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    .news-list li {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px 20px;
-      margin-bottom: 10px;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 8px;
-      transition: transform 0.2s ease, background 0.3s ease;
-    }
-    .news-list li:hover {
-      transform: translateX(5px);
-      background: rgba(255, 255, 255, 0.15);
-    }
-    .news-list .date {
-      font-size: 0.9rem;
-      color: #aaa;
-      margin-right: 15px;
-      white-space: nowrap;
-    }
-    .news-list a {
-      color: #5aa0f0;
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
-    .news-list a:hover {
-      color: #2c7dce;
-    }
+/* === ヘッダー === */
+.site-header {
+  position:fixed; top:0; left:0; width:100%;
+  background: rgba(0,0,0,0.1); backdrop-filter:blur(6px);
+  padding:1rem 2rem;
+  display:flex; justify-content:space-between; align-items:center;
+  z-index:1000;
+  box-shadow:0 2px 8px rgba(0,0,0,0.3);
+  transition: background 0.3s ease;
+}
+.site-header .logo img { height:40px; }
+.main-nav ul { display:flex; list-style:none; gap:2rem; }
+.main-nav a { color:#fff; font-weight:bold; position:relative; padding-bottom:4px; }
+.main-nav a::after {
+  content:""; position:absolute; bottom:0; left:0; width:100%; height:2px;
+  background: linear-gradient(90deg, #2364a5, #2c7dce, #5aa0f0);
+  transform: scaleX(0); transform-origin:left; transition: transform .3s ease;
+}
+.main-nav a:hover::after { transform: scaleX(1); }
+.hamburger { display:none; flex-direction:column; justify-content:space-between; width:25px; height:20px; cursor:pointer; }
+.hamburger span { display:block; height:3px; width:100%; background:#fff; border-radius:2px; }
+@media(max-width:768px){
+  .main-nav { display:none; position:absolute; top:100%; left:0; width:100%; background: rgba(0,0,0,0.95); flex-direction:column; }
+  .main-nav ul { flex-direction:column; gap:0; }
+  .main-nav li { border-bottom:1px solid #222; }
+  .main-nav a { padding:1rem; display:block; }
+  .hamburger { display:flex; }
+}
+.main-nav.open { display:flex; }
 
-    /* === フッター === */
-    footer {
-      background: #111;
-      padding: 40px 20px;
-      text-align: center;
-      color: #777;
-      margin-top: 60px;
-    }
-    footer p {
-      margin: 5px 0;
-    }
-  </style>
+/* === NEWSセクション === */
+.news-section {
+  padding:100px 20px 60px; /* ヘッダー分マージン調整 */
+  max-width:960px;
+  margin:0 auto;
+}
+.news-section h2 {
+  text-align:center;
+  font-size:2.2rem;
+  margin-bottom:40px;
+  color:#fff;
+}
+.news-list {
+  list-style:none;
+  padding:0;
+  margin:0;
+}
+.news-list li {
+  padding:15px 20px;
+  margin-bottom:12px;
+  background: rgba(255,255,255,0.05);
+  border-radius:8px;
+  transition: transform 0.2s ease, background 0.3s ease;
+}
+.news-list li:hover { 
+  transform: translateX(5px);
+  background: rgba(255,255,255,0.15);
+}
+.news-list a {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  color:#fff;
+  text-decoration:none;
+  width:100%;
+}
+.news-list .date {
+  font-size:0.9rem;
+  color:#aaa;
+  margin-right:15px;
+  white-space:nowrap;
+}
+.news-list a span.title {
+  color:#5aa0f0;
+  transition: color 0.3s ease;
+}
+.news-list a:hover span.title { color:#2c7dce; }
+
+/* === フッター === */
+.site-footer {
+  background: linear-gradient(135deg,#000,#071426,#0b1f3f);
+  color:#cfe8ff;
+  text-align:center;
+  padding:80px 20px 120px;
+  position:relative;
+  overflow:hidden;
+}
+.footer-content { max-width:960px; margin:0 auto; }
+.site-footer .logo { height:70px; margin-bottom:20px; filter:brightness(0) invert(1);}
+.creator { font-size:14px; margin:10px 0; }
+.sns-links { display:flex; justify-content:center; gap:20px; margin-top:15px; }
+.sns-links a { color:#5aa0f0; text-decoration:underline; font-size:14px; }
+
+</style>
 </head>
 <body>
-  <!-- ヘッダー -->
-  <header id="header">
-    <div class="logo">WELL-LAB.</div>
-    <nav>
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="aboutus.html">About Us</a></li>
-        <li><a href="products.html">Products</a></li>
-        <li><a href="NEWS.html">News</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
-    </nav>
-  </header>
 
-  <!-- NEWSセクション -->
-  <section class="news-section">
-    <h2>お知らせ一覧</h2>
-    <ul class="news-list" id="all-news-list"></ul>
-  </section>
+<header class="site-header">
+  <a href="index.html" class="logo"><img src="images/logo.png" alt="WELL-LAB Logo"></a>
+  <nav class="main-nav">
+    <ul>
+      <li><a href="index.html">HOME</a></li>
+      <li><a href="aboutus.html">ABOUT US</a></li>
+      <li><a href="products.html">PRODUCTS</a></li>
+      <li><a href="NEWS.html" class="active">NEWS</a></li>
+      <li><a href="contact.html">CONTACT</a></li>
+    </ul>
+  </nav>
+  <div class="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</header>
 
-  <!-- フッター -->
-  <footer>
-    <p>&copy; 2025 WELL-LAB. All Rights Reserved.</p>
-  </footer>
+<section class="news-section">
+  <h2>お知らせ一覧</h2>
+  <ul class="news-list" id="all-news-list">
+    <!-- JavaScriptで全件表示 -->
+  </ul>
+</section>
 
-  <script>
-    // === ヘッダー濃淡変化 ===
-    const header = document.getElementById("header");
-    let lastScrollY = window.scrollY;
-    window.addEventListener("scroll", () => {
-      const currentY = window.scrollY;
-      if (currentY > lastScrollY) {
-        header.style.background = "rgba(0,0,0,0.1)";
-      } else if (currentY < lastScrollY) {
-        header.style.background = "rgba(0,0,0,0.95)";
-      }
-      lastScrollY = currentY;
+<footer class="site-footer">
+  <div class="footer-content">
+    <img class="logo" src="images/logo.png" alt="WELL-LAB">
+    <p class="creator">© 2025 WELL-LAB.</p>
+    <div class="sns-links">
+      <a href="#">Twitter</a>
+      <a href="#">X(未定)</a>
+      <a href="#">E-mail</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ハンバーガー開閉
+const hamburger = document.querySelector('.hamburger');
+const nav = document.querySelector('.main-nav');
+hamburger.addEventListener('click',()=>nav.classList.toggle('open'));
+
+// ヘッダー濃淡変化
+const header = document.querySelector('.site-header');
+let lastScrollY = window.scrollY;
+window.addEventListener('scroll', ()=>{
+  const currentY = window.scrollY;
+  if(currentY > lastScrollY){
+    header.style.background = 'rgba(0,0,0,0.1)';
+  } else if(currentY < lastScrollY){
+    header.style.background = 'rgba(0,0,0,0.95)';
+  }
+  lastScrollY = currentY;
+});
+
+// ✅ GASからニュースを取得して表示
+async function loadNewsFromGAS(url, listId) {
+  try {
+    const res = await fetch(url);
+    const items = await res.json();
+    const container = document.getElementById(listId);
+    items.forEach(item => {
+      const li = document.createElement("li");
+      li.innerHTML = `<a href="${item['リンク']}" target="_blank"><span class="date">${item['日付']}</span> <span class="title">${item['タイトル']}</span></a>`;
+      container.appendChild(li);
     });
+  } catch (error) {
+    console.error("ニュースの取得に失敗しました:", error);
+  }
+}
 
-    // === GASからニュース取得 ===
-    async function loadNewsFromGAS(url, listId) {
-      try {
-        const res = await fetch(url);
-        const items = await res.json();
-        const container = document.getElementById(listId);
+// 実行
+loadNewsFromGAS(
+  "https://script.google.com/macros/s/AKfycbxzRHqAHHTxrYXt3c7C8teMKhMne-TMLt8mfovMXHdS28IeUtpkOoxRTmhgXuU9MaJD/exec",
+  "all-news-list"
+);
+</script>
 
-        items.forEach(item => {
-          const li = document.createElement("li");
-          li.innerHTML = `
-            <span class="date">${item['日付']}</span>
-            <a href="${item['リンク']}" target="_blank">${item['タイトル']}</a>
-          `;
-          container.appendChild(li);
-        });
-      } catch (error) {
-        console.error("ニュースの取得に失敗しました:", error);
-      }
-    }
-
-    // NEWS一覧を読み込み
-    if (document.getElementById("all-news-list")) {
-      loadNewsFromGAS(
-        "https://script.google.com/macros/s/AKfycbxzRHqAHHTxrYXt3c7C8teMKhMne-TMLt8mfovMXHdS28IeUtpkOoxRTmhgXuU9MaJD/exec",
-        "all-news-list"
-      );
-    }
-  </script>
 </body>
 </html>
